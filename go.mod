@@ -1,1 +1,1 @@
-module "zammad"
+module "github.com/AlessandroSechi/zammad-go"
