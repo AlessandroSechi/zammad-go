@@ -7,23 +7,22 @@ import (
 
 type Optional map[string]interface{}
 
-type(
+type (
 	Client struct {
-		Client      *http.Client
-		Username	string
-		Password	string
-		Token		string
-		OAuth		string
-		Url			string
+		Client   *http.Client
+		Username string
+		Password string
+		Token    string
+		OAuth    string
+		Url      string
 	}
 
 	ErrorResponse struct {
-		Description					string	`json:"error"`
-		DescriptionHuman			string	`json:"error_human"`
+		Description      string `json:"error"`
+		DescriptionHuman string `json:"error_human"`
 	}
-
 )
 
 func (r *ErrorResponse) Error() string {
-	return fmt.Sprintf("%s", r.Description)
+	return fmt.Sprint(r.Description)
 }
