@@ -77,7 +77,10 @@ func (c *Client) Send(req *http.Request, v interface{}) error {
 		data, err = ioutil.ReadAll(resp.Body)
 
 		if err == nil && len(data) > 0 {
-			json.Unmarshal(data, errResp)
+			err = json.Unmarshal(data, errResp)
+			if err != nil {
+				return err
+			}
 		}
 
 		return errResp
@@ -88,7 +91,10 @@ func (c *Client) Send(req *http.Request, v interface{}) error {
 	}
 
 	if w, ok := v.(io.Writer); ok {
-		io.Copy(w, resp.Body)
+		_, err = io.Copy(w, resp.Body)
+		if err != nil {
+			return err
+		}
 		return nil
 	}
 
