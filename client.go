@@ -98,6 +98,9 @@ func (c *Client) Send(req *http.Request, v interface{}) error {
 		return nil
 	}
 
+	buf, _ := io.ReadAll(resp.Body)
+	fmt.Printf("%s\n", buf)
+
 	return json.NewDecoder(resp.Body).Decode(v)
 }
 
