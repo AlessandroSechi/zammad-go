@@ -8,7 +8,11 @@ for an introduction.
 ```go
 package main
 
-import "github.com/AlessandroSechi/zammad-go"
+import (
+    "log"
+
+    "github.com/AlessandroSechi/zammad-go"
+)
 
 func main() {
     client := zammad.New("https://my-zammad-instance.com")
