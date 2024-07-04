@@ -5,8 +5,6 @@ import (
 	"net/http"
 )
 
-type Optional map[string]interface{}
-
 type (
 	Client struct {
 		Client   *http.Client

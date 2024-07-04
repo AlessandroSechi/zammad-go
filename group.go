@@ -1,65 +1,82 @@
 package zammad
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
-func (c *Client) GroupList() (*[]map[string]interface{}, error) {
-	var groups []map[string]interface{}
+// Group is a Zammad group.
+type Group struct {
+	ID                 int       `json:"id"`
+	Name               string    `json:"name"`
+	FollowUpPossible   string    `json:"follow_up_possible"`
+	FollowUpAssignment bool      `json:"follow_up_assignment"`
+	Active             bool      `json:"active"`
+	UpdatedByID        int       `json:"updated_by_id"`
+	CreatedByID        int       `json:"created_by_id"`
+	CreatedAt          time.Time `json:"created_at"`
+	UpdatedAt          time.Time `json:"updated_at"`
+	UserIds            []int     `json:"user_ids"`
+}
+
+func (c *Client) GroupList() ([]Group, error) {
+	var groups []Group
 
 	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, "/api/v1/groups"), nil)
 	if err != nil {
-		return &groups, err
+		return nil, err
 	}
 
 	if err = c.SendWithAuth(req, &groups); err != nil {
-		return &groups, err
+		return nil, err
 	}
 
-	return &groups, nil
+	return groups, nil
 }
 
-func (c *Client) GroupShow(groupID int) (*map[string]interface{}, error) {
-	var group map[string]interface{}
+func (c *Client) GroupShow(groupID int) (Group, error) {
+	var group Group
 
 	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/groups/%d", groupID)), nil)
 	if err != nil {
-		return &group, err
+		return group, err
 	}
 
 	if err = c.SendWithAuth(req, &group); err != nil {
-		return &group, err
+		return group, err
 	}
 
-	return &group, nil
+	return group, nil
 }
 
-func (c *Client) GroupCreate(g *map[string]interface{}) (*map[string]interface{}, error) {
-	var group map[string]interface{}
+func (c *Client) GroupCreate(g Group) (Group, error) {
+	var group Group
 
 	req, err := c.NewRequest("POST", fmt.Sprintf("%s%s", c.Url, "/api/v1/groups"), g)
 	if err != nil {
-		return &group, err
+		return group, err
 	}
 
 	if err = c.SendWithAuth(req, &group); err != nil {
-		return &group, err
+		return group, err
 	}
 
-	return &group, nil
+	return group, nil
 }
 
-func (c *Client) GroupUpdate(groupID int, g *map[string]interface{}) (*map[string]interface{}, error) {
-	var group map[string]interface{}
+func (c *Client) GroupUpdate(groupID int, g Group) (Group, error) {
+	var group Group
 
 	req, err := c.NewRequest("PUT", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/groups/%d", groupID)), g)
 	if err != nil {
-		return &group, err
+		return group, err
 	}
 
 	if err = c.SendWithAuth(req, &group); err != nil {
-		return &group, err
+		return group, err
 	}
 
-	return &group, nil
+	return group, nil
 }
 
 func (c *Client) GroupDelete(groupID int) error {

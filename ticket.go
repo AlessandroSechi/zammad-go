@@ -1,80 +1,121 @@
 package zammad
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
-func (c *Client) TicketList() (*[]map[string]interface{}, error) {
-	var tickets []map[string]interface{}
+// Ticket is a zammad ticket.
+type Ticket struct {
+	ID                    int       `json:"id"`
+	GroupID               int       `json:"group_id"`
+	PriorityID            int       `json:"priority_id"`
+	StateID               int       `json:"state_id"`
+	OrganizationID        int       `json:"organization_id"`
+	Number                string    `json:"number"`
+	Title                 string    `json:"title"`
+	OwnerID               int       `json:"owner_id"`
+	CustomerID            int       `json:"customer_id"`
+	LastContactAt         time.Time `json:"last_contact_at"`
+	LastContactAgentAt    time.Time `json:"last_contact_agent_at"`
+	LastContactCustomerAt time.Time `json:"last_contact_customer_at"`
+	CreateArticleTypeID   int       `json:"create_article_type_id"`
+	CreateArticleSenderID int       `json:"create_article_sender_id"`
+	ArticleCount          int       `json:"article_count"`
+	UpdatedByID           int       `json:"updated_by_id"`
+	CreatedByID           int       `json:"created_by_id"`
+	CreatedAt             time.Time `json:"created_at"`
+	UpdatedAt             time.Time `json:"updated_at"`
+}
+
+func (c *Client) TicketList() ([]Ticket, error) {
+	var tickets []Ticket
 
 	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, "/api/v1/tickets"), nil)
 	if err != nil {
-		return &tickets, err
+		return nil, err
 	}
 
 	if err = c.SendWithAuth(req, &tickets); err != nil {
-		return &tickets, err
+		return nil, err
 	}
 
-	return &tickets, nil
+	return tickets, nil
 }
 
-func (c *Client) TicketSearch(query string, limit int) (*[]map[string]interface{}, error) {
-	var tickets []map[string]interface{}
+// TicketSearch searches for tickets. See https://docs.zammad.org/en/latest/api/ticket/index.html#search
+// Note that query must be url.QueryEscape-ed.
+func (c *Client) TicketSearch(query string, limit int) ([]Ticket, error) {
+	type TickSearch struct {
+		Tickets []int `json:"tickets"`
+		Count   int   `json:"tickets_count"`
+	}
 
+	var ticksearch TickSearch
 	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/tickets/search?query=%s&limit=%d", query, limit)), nil)
 	if err != nil {
-		return &tickets, err
+		return nil, err
 	}
 
-	if err = c.SendWithAuth(req, &tickets); err != nil {
-		return &tickets, err
+	if err = c.SendWithAuth(req, &ticksearch); err != nil {
+		return nil, err
 	}
 
-	return &tickets, nil
+	// the json returns is quite something, just use the ticket IDs to fetch all the tickets.
+	tickets := make([]Ticket, ticksearch.Count)
+	for i := range tickets {
+		tickets[i], err = c.TicketShow(ticksearch.Tickets[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	return tickets, nil
 }
 
-func (c *Client) TicketShow(ticketID int) (*map[string]interface{}, error) {
-	var ticket map[string]interface{}
+func (c *Client) TicketShow(ticketID int) (Ticket, error) {
+	var ticket Ticket
 
 	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/tickets/%d", ticketID)), nil)
 	if err != nil {
-		return &ticket, err
+		return ticket, err
 	}
 
 	if err = c.SendWithAuth(req, &ticket); err != nil {
-		return &ticket, err
+		return ticket, err
 	}
 
-	return &ticket, nil
+	return ticket, nil
 }
 
-func (c *Client) TicketCreate(t *map[string]interface{}) (*map[string]interface{}, error) {
-	var ticket map[string]interface{}
+func (c *Client) TicketCreate(t Ticket) (Ticket, error) {
+	var ticket Ticket
 
 	req, err := c.NewRequest("POST", fmt.Sprintf("%s%s", c.Url, "/api/v1/tickets"), t)
 	if err != nil {
-		return &ticket, err
+		return ticket, err
 	}
 
 	if err = c.SendWithAuth(req, &ticket); err != nil {
-		return &ticket, err
+		return ticket, err
 	}
 
-	return &ticket, nil
+	return ticket, nil
 }
 
-func (c *Client) TicketUpdate(ticketID int, t *map[string]interface{}) (*map[string]interface{}, error) {
-	var ticket map[string]interface{}
+func (c *Client) TicketUpdate(ticketID int, t Ticket) (Ticket, error) {
+	var ticket Ticket
 
 	req, err := c.NewRequest("PUT", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/tickets/%d", ticketID)), t)
 	if err != nil {
-		return &ticket, err
+		return ticket, err
 	}
 
 	if err = c.SendWithAuth(req, &ticket); err != nil {
-		return &ticket, err
+		return ticket, err
 	}
 
-	return &ticket, nil
+	return ticket, nil
 }
 
 func (c *Client) TicketDelete(ticketID int) error {
