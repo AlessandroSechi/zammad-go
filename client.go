@@ -12,8 +12,8 @@ import (
 
 // New returns a new Zammad client initialized with an http client. Authentication need to be set seperately. The http
 // client uses a timeout of 5 seconds.
-func New() *Client {
-	return &Client{Client: &http.Client{Timeout: 5 * time.Second}}
+func New(URL string) *Client {
+	return &Client{Client: &http.Client{Timeout: 5 * time.Second}, Url: URL}
 }
 
 func NewClient(client *Client) (*Client, error) {

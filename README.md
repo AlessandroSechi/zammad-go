@@ -1,21 +1,28 @@
-### Go client for Zammad REST API
+# Go client for Zammad REST API
 
+This is an Go implementation to lets you use the Zammad's REST API, see https://zammad.com/en/product/features/rest-api
+for an introduction.
 
 ### Example
 
 ```go
+package main
+
 import "github.com/AlessandroSechi/zammad-go"
 
-// Create a client instance
-client, err := zammad.NewClient(&zammad.Client{
-		Username: "",
-		Password: "",
-		Token:    "",
-		OAuth:    "",
-		Url:      "http://my-zammad-instance.com",
-	})
+func main() {
+    client := zammad.New("https://my-zammad-instance.com")
+    client.Token = "my-accces-token"
+    // or basic auth see godoc
 
-users, err := client.UserList() //Get Users
+    users, err := client.UserList() // Get all users
+    if err != nil {
+        log.Fatal(err)
+    }
 
-user, err := client.UserShow(1) //Get User
+    user, err := client.UserShow(1)  // Get User with ID 1
+    if err != nil {
+        log.Fatal(err)
+    }
+}
 ```
