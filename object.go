@@ -75,4 +75,3 @@ func (c *Client) ObjectExecuteDatabaseMigration() error {
 
 	return nil
 }
-
