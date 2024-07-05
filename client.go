@@ -48,7 +48,21 @@ func (c *Client) NewRequest(method, url string, payload interface{}) (*http.Requ
 		}
 		buf = bytes.NewBuffer(b)
 	}
-	return http.NewRequest(method, url, buf)
+	req, err := http.NewRequest(method, url, buf)
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("Content-type", "application/json")
+
+	if c.FromFunc != nil {
+		x := c.FromFunc()
+		if x != "" {
+			req.Header.Set("From", x)
+		}
+	}
+
+	return req, nil
 }
 
 // Send makes a request to the API, the response body will be unmarshaled into v, or if v is an io.Writer, the response

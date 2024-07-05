@@ -13,7 +13,11 @@ type (
 		Password string       // Password used when doing basic auth
 		Token    string       // Token is used when using an Access Token
 		OAuth    string
-		Url      string // Url is the URL of Zammad.
+		Url      string
+		// FromFunc is used to set the From HTTP header, if you want to act on behalf of another user.
+		// See https://docs.zammad.org/en/latest/api/intro.html#actions-on-behalf-of-other-users. If not nil
+		// *and* returning a non empty string, this value will be used in the request.
+		FromFunc func() string
 	}
 
 	// TODO: not used yet.
