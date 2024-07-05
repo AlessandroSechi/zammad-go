@@ -7,7 +7,7 @@ import (
 
 type (
 	Client struct {
-		Client   *http.Client
+		Client   Doer
 		Username string
 		Password string
 		Token    string
@@ -18,6 +18,11 @@ type (
 	ErrorResponse struct {
 		Description      string `json:"error"`
 		DescriptionHuman string `json:"error_human"`
+	}
+
+	// Doer is an interface that allows mimicking a *http.Client.
+	Doer interface {
+		Do(*http.Request) (*http.Response, error)
 	}
 )
 
