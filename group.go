@@ -9,6 +9,7 @@ import (
 type Group struct {
 	ID                 int       `json:"id"`
 	Name               string    `json:"name"`
+	NameLast           string    `json:"name_last"`
 	FollowUpPossible   string    `json:"follow_up_possible"`
 	FollowUpAssignment bool      `json:"follow_up_assignment"`
 	Active             bool      `json:"active"`
