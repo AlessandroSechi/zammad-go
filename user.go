@@ -17,6 +17,7 @@ type User struct {
 	LastLogin      time.Time `json:"last_login"`
 }
 
+// UserMe returns the current authenticated user.
 func (c *Client) UserMe() (User, error) {
 	var user User
 

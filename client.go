@@ -7,7 +7,14 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"time"
 )
+
+// New returns a new Zammad client initialized with an http client. Authentication need to be set seperately. The http
+// client uses a timeout of 5 seconds.
+func New(URL string) *Client {
+	return &Client{Client: &http.Client{Timeout: 5 * time.Second}, Url: URL}
+}
 
 func NewClient(client *Client) (*Client, error) {
 	if client.Url == "" {
@@ -31,8 +38,7 @@ func NewClient(client *Client) (*Client, error) {
 	return client, nil
 }
 
-// NewRequest constructs a request
-// Convert payload to a JSON
+// NewRequest constructs a request and converts the payload to JSON.
 func (c *Client) NewRequest(method, url string, payload interface{}) (*http.Request, error) {
 	var buf io.Reader
 	if payload != nil {
@@ -45,26 +51,15 @@ func (c *Client) NewRequest(method, url string, payload interface{}) (*http.Requ
 	return http.NewRequest(method, url, buf)
 }
 
-// Send makes a request to the API, the response body will be
-// unmarshaled into v, or if v is an io.Writer, the response will
-// be written to it without decoding
+// Send makes a request to the API, the response body will be unmarshaled into v, or if v is an io.Writer, the response
+// will be written to it without decoding. This can be helpful when debugging.
 func (c *Client) Send(req *http.Request, v interface{}) error {
-	var (
-		err  error
-		resp *http.Response
-		data []byte
-	)
-
-	// Set default headers
 	req.Header.Set("Accept", "application/json")
-
-	// Default values for headers
 	if req.Header.Get("Content-type") == "" {
 		req.Header.Set("Content-type", "application/json")
 	}
 
-	resp, err = c.Client.Do(req)
-
+	resp, err := c.Client.Do(req)
 	if err != nil {
 		return err
 	}
@@ -72,7 +67,7 @@ func (c *Client) Send(req *http.Request, v interface{}) error {
 
 	if resp.StatusCode < 200 || resp.StatusCode > 299 {
 		errResp := &ErrorResponse{}
-		data, err = io.ReadAll(resp.Body)
+		data, err := io.ReadAll(resp.Body)
 
 		if err == nil && len(data) > 0 {
 			err = json.Unmarshal(data, errResp)
@@ -99,9 +94,8 @@ func (c *Client) Send(req *http.Request, v interface{}) error {
 	return json.NewDecoder(resp.Body).Decode(v)
 }
 
-// SendWithAuth makes a request to the API and apply proper authentication header automatically.
+// SendWithAuth makes a request to the API and apply the proper authentication header automatically.
 func (c *Client) SendWithAuth(req *http.Request, v interface{}) error {
-
 	//Detect Authentication Type
 	if c.Username != "" && c.Password != "" {
 		req.SetBasicAuth(c.Username, c.Password)

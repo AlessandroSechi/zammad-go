@@ -1,9 +1,24 @@
 package zammad
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
-// TODO
-type TicketPriority struct{}
+// TicketPriority represent a Zammad ticket priority. See https://docs.zammad.org/en/latest/api/ticket/priorities.html.
+type TicketPriority struct {
+	ID            int       `json:"id"`
+	Name          string    `json:"name"`
+	DefaultCreate bool      `json:"default_create"`
+	UIIcon        string    `json:"ui_icon"`
+	UIColor       string    `json:"ui_color"`
+	Note          any       `json:"note"`
+	Active        bool      `json:"active"`
+	UpdatedByID   int       `json:"updated_by_id"`
+	CreatedByID   int       `json:"created_by_id"`
+	CreatedAt     time.Time `json:"created_at"`
+	UpdatedAt     time.Time `json:"updated_at"`
+}
 
 func (c *Client) TicketPriorityList() ([]TicketPriority, error) {
 	var ticketPriorities []TicketPriority
