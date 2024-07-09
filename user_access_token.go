@@ -2,34 +2,38 @@ package zammad
 
 import "fmt"
 
-func (c *Client) UserAccessTokenList() (*[]map[string]interface{}, error) {
-	var userAccessTokens []map[string]interface{}
+// UserAccessToken is a Zammad User access token. See https://docs.zammad.org/en/latest/api/user-access-token.html.
+// TODO(miek): make is usable for create and list
+type UserAccessToken map[string]interface{}
+
+func (c *Client) UserAccessTokenList() ([]UserAccessToken, error) {
+	var userAccessTokens []UserAccessToken
 
 	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, "/api/v1/user_access_token"), nil)
 	if err != nil {
-		return &userAccessTokens, err
+		return userAccessTokens, err
 	}
 
-	if err = c.SendWithAuth(req, &userAccessTokens); err != nil {
-		return &userAccessTokens, err
+	if err = c.SendWithAuth(req, userAccessTokens); err != nil {
+		return userAccessTokens, err
 	}
 
-	return &userAccessTokens, nil
+	return userAccessTokens, nil
 }
 
-func (c *Client) UserAccessTokenCreate(t *map[string]interface{}) (*map[string]interface{}, error) {
+func (c *Client) UserAccessTokenCreate(t UserAccessToken) (UserAccessToken, error) {
 	var userAccessToken map[string]interface{}
 
 	req, err := c.NewRequest("POST", fmt.Sprintf("%s%s", c.Url, "/api/v1/user_access_token"), t)
 	if err != nil {
-		return &userAccessToken, err
+		return userAccessToken, err
 	}
 
-	if err = c.SendWithAuth(req, &userAccessToken); err != nil {
-		return &userAccessToken, err
+	if err = c.SendWithAuth(req, userAccessToken); err != nil {
+		return userAccessToken, err
 	}
 
-	return &userAccessToken, nil
+	return userAccessToken, nil
 }
 
 func (c *Client) UserAccessTokenDelete(tokenID int) error {
