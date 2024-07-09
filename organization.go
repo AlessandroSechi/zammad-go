@@ -1,6 +1,12 @@
 package zammad
 
-import "fmt"
+import (
+	"fmt"
+)
+
+// Organization represent a Zammad organisation.
+type Organization struct {
+}
 
 func (c *Client) OrganizationList() (*[]map[string]interface{}, error) {
 	var organizations []map[string]interface{}

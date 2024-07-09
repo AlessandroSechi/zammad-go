@@ -2,6 +2,10 @@ package zammad
 
 import "fmt"
 
+// OnlineNotification represent a Zammad online notification.
+type OnlineNotification struct {
+}
+
 func (c *Client) OnlineNotificationList() (*[]map[string]interface{}, error) {
 	var notifications []map[string]interface{}
 

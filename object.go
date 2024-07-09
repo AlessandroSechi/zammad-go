@@ -2,6 +2,13 @@ package zammad
 
 import "fmt"
 
+// Object represent a Zammad object. See https://docs.zammad.org/en/latest/api/object.html.
+// Also note the warning there:
+//
+//	Adjusting objects via API can cause serious issues with your instance. Proceed with absolute caution and ensure
+//	to adjust any of Zammads default fields.
+type Object struct{}
+
 func (c *Client) ObjectList() (*[]map[string]interface{}, error) {
 	var objects []map[string]interface{}
 
