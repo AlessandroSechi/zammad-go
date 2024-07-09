@@ -25,17 +25,26 @@ func (c *Client) NewRequest(method, url string, payload interface{}) (*http.Requ
 		}
 		buf = bytes.NewBuffer(b)
 	}
-	return http.NewRequest(method, url, buf)
+	req, err := http.NewRequest(method, url, buf)
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("Content-type", "application/json")
+
+	if c.FromFunc != nil {
+		x := c.FromFunc()
+		if x != "" {
+			req.Header.Set("From", x)
+		}
+	}
+
+	return req, nil
 }
 
 // send makes a request to the API, the response body will be unmarshaled into v, or if v is an io.Writer, the response
 // will be written to it without decoding. This can be helpful when debugging.
 func (c *Client) send(req *http.Request, v interface{}) error {
-	req.Header.Set("Accept", "application/json")
-	if req.Header.Get("Content-type") == "" {
-		req.Header.Set("Content-type", "application/json")
-	}
-
 	resp, err := c.Client.Do(req)
 	if err != nil {
 		return err

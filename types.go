@@ -10,17 +10,26 @@ type (
 	// multiple authencation options that will be applied in the order, basic auth, token based, and
 	// then oauth. Where the last one set, wins.
 	Client struct {
-		Client   *http.Client // Client is the http client used to make the queries.
-		Username string       // Username and Password are used when doing basic auth.
-		Password string       // Password used when doing basic auth.
-		Token    string       // Token is used when using an Access Token.
-		OAuth    string       // Oauth is used when using Oauth authentication.
-		Url      string       // Url is the URL of Zammad.
+		Client   Doer
+		Username string
+		Password string
+		Token    string
+		OAuth    string
+		Url      string
+		// FromFunc is used to set the From HTTP header, if you want to act on behalf of another user.
+		// See https://docs.zammad.org/en/latest/api/intro.html#actions-on-behalf-of-other-users. If not nil
+		// *and* returning a non empty string, this value will be used in the request.
+		FromFunc func() string
 	}
 
 	ErrorResponse struct {
 		Description      string `json:"error"`
 		DescriptionHuman string `json:"error_human"`
+	}
+
+	// Doer is an interface that allows mimicking a *http.Client.
+	Doer interface {
+		Do(*http.Request) (*http.Response, error)
 	}
 )
 
