@@ -8,10 +8,10 @@ import (
 type (
 	// Client is used to query Zammad. It is safe to use concurrently.
 	Client struct {
-		Client   *http.Client // Client is the http client used to make the queries.
-		Username string       // Username and Password are used when doing basic auth.
-		Password string       // Password used when doing basic auth
-		Token    string       // Token is used when using an Access Token
+		Client   Doer
+		Username string
+		Password string
+		Token    string
 		OAuth    string
 		Url      string
 		// FromFunc is used to set the From HTTP header, if you want to act on behalf of another user.
@@ -24,6 +24,11 @@ type (
 	ErrorResponse struct {
 		Description      string `json:"error"`
 		DescriptionHuman string `json:"error_human"`
+	}
+
+	// Doer is an interface that allows mimicking a *http.Client.
+	Doer interface {
+		Do(*http.Request) (*http.Response, error)
 	}
 )
 
