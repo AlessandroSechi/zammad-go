@@ -43,6 +43,8 @@ func (c *Client) TicketList() ([]Ticket, error) {
 	return tickets, nil
 }
 
+// TicketSearch searches for tickets. See https://docs.zammad.org/en/latest/api/ticket/index.html#search.
+// Note that query must be url.QueryEscape-ed.
 func (c *Client) TicketSearch(query string, limit int) ([]Ticket, error) {
 	type Assets struct {
 		AssetTicket map[int]Ticket `json:"ticket"`
