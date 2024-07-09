@@ -10,7 +10,7 @@ func (c *Client) OrganizationList() (*[]map[string]interface{}, error) {
 		return &organizations, err
 	}
 
-	if err = c.SendWithAuth(req, &organizations); err != nil {
+	if err = c.sendWithAuth(req, &organizations); err != nil {
 		return &organizations, err
 	}
 
@@ -25,7 +25,7 @@ func (c *Client) OrganizationSearch(query string, limit int) (*[]map[string]inte
 		return &organizations, err
 	}
 
-	if err = c.SendWithAuth(req, &organizations); err != nil {
+	if err = c.sendWithAuth(req, &organizations); err != nil {
 		return &organizations, err
 	}
 
@@ -40,7 +40,7 @@ func (c *Client) OrganizationShow(organizationID int) (*map[string]interface{}, 
 		return &organization, err
 	}
 
-	if err = c.SendWithAuth(req, &organization); err != nil {
+	if err = c.sendWithAuth(req, &organization); err != nil {
 		return &organization, err
 	}
 
@@ -55,7 +55,7 @@ func (c *Client) OrganizationCreate(o *map[string]interface{}) (*map[string]inte
 		return &organization, err
 	}
 
-	if err = c.SendWithAuth(req, &organization); err != nil {
+	if err = c.sendWithAuth(req, &organization); err != nil {
 		return &organization, err
 	}
 
@@ -70,7 +70,7 @@ func (c *Client) OrganizationUpdate(organizationID int, o *map[string]interface{
 		return &organization, err
 	}
 
-	if err = c.SendWithAuth(req, &organization); err != nil {
+	if err = c.sendWithAuth(req, &organization); err != nil {
 		return &organization, err
 	}
 
@@ -84,7 +84,7 @@ func (c *Client) OrganizationDelete(organizationID int) error {
 		return err
 	}
 
-	if err = c.SendWithAuth(req, nil); err != nil {
+	if err = c.sendWithAuth(req, nil); err != nil {
 		return err
 	}
 

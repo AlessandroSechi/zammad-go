@@ -28,7 +28,7 @@ func (c *Client) TicketPriorityList() ([]TicketPriority, error) {
 		return ticketPriorities, err
 	}
 
-	if err = c.SendWithAuth(req, &ticketPriorities); err != nil {
+	if err = c.sendWithAuth(req, &ticketPriorities); err != nil {
 		return ticketPriorities, err
 	}
 
@@ -43,7 +43,7 @@ func (c *Client) TicketPriorityShow(ticketPriorityID int) (TicketPriority, error
 		return ticketPriority, err
 	}
 
-	if err = c.SendWithAuth(req, &ticketPriority); err != nil {
+	if err = c.sendWithAuth(req, &ticketPriority); err != nil {
 		return ticketPriority, err
 	}
 
@@ -58,7 +58,7 @@ func (c *Client) TicketPriorityCreate(t TicketPriority) (TicketPriority, error) 
 		return ticketPriority, err
 	}
 
-	if err = c.SendWithAuth(req, &ticketPriority); err != nil {
+	if err = c.sendWithAuth(req, &ticketPriority); err != nil {
 		return ticketPriority, err
 	}
 
@@ -73,7 +73,7 @@ func (c *Client) TicketPriorityUpdate(ticketPriorityID int, t TicketPriority) (T
 		return ticketPriority, err
 	}
 
-	if err = c.SendWithAuth(req, &ticketPriority); err != nil {
+	if err = c.sendWithAuth(req, &ticketPriority); err != nil {
 		return ticketPriority, err
 	}
 
@@ -87,7 +87,7 @@ func (c *Client) TicketPriorityDelete(ticketPriorityID int) error {
 		return err
 	}
 
-	if err = c.SendWithAuth(req, nil); err != nil {
+	if err = c.sendWithAuth(req, nil); err != nil {
 		return err
 	}
 

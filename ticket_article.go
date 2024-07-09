@@ -39,7 +39,7 @@ func (c *Client) TicketArticleByTicket(ticketID int) ([]TicketArticle, error) {
 		return ticketArticles, err
 	}
 
-	if err = c.SendWithAuth(req, &ticketArticles); err != nil {
+	if err = c.sendWithAuth(req, &ticketArticles); err != nil {
 		return ticketArticles, err
 	}
 
@@ -54,7 +54,7 @@ func (c *Client) TicketArticleShow(ticketArticleID int) (TicketArticle, error) {
 		return ticketArticle, err
 	}
 
-	if err = c.SendWithAuth(req, &ticketArticle); err != nil {
+	if err = c.sendWithAuth(req, &ticketArticle); err != nil {
 		return ticketArticle, err
 	}
 
@@ -69,7 +69,7 @@ func (c *Client) TicketArticleCreate(t TicketArticle) (TicketArticle, error) {
 		return ticketArticle, err
 	}
 
-	if err = c.SendWithAuth(req, &ticketArticle); err != nil {
+	if err = c.sendWithAuth(req, &ticketArticle); err != nil {
 		return ticketArticle, err
 	}
 

@@ -84,5 +84,5 @@ func (c *Client) sendWithAuth(req *http.Request, v interface{}) error {
 		req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", c.OAuth))
 	}
 
-	return c.Send(req, v)
+	return c.send(req, v)
 }

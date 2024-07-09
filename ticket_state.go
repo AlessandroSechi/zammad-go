@@ -27,7 +27,7 @@ func (c *Client) TicketStateList() ([]TicketState, error) {
 		return ticketStates, err
 	}
 
-	if err = c.SendWithAuth(req, &ticketStates); err != nil {
+	if err = c.sendWithAuth(req, &ticketStates); err != nil {
 		return ticketStates, err
 	}
 
@@ -42,7 +42,7 @@ func (c *Client) TicketStateShow(ticketStateID int) (TicketState, error) {
 		return ticketState, err
 	}
 
-	if err = c.SendWithAuth(req, &ticketState); err != nil {
+	if err = c.sendWithAuth(req, &ticketState); err != nil {
 		return ticketState, err
 	}
 
@@ -57,7 +57,7 @@ func (c *Client) TicketStateCreate(t TicketState) (TicketState, error) {
 		return ticketState, err
 	}
 
-	if err = c.SendWithAuth(req, &ticketState); err != nil {
+	if err = c.sendWithAuth(req, &ticketState); err != nil {
 		return ticketState, err
 	}
 
@@ -72,7 +72,7 @@ func (c *Client) TicketStateUpdate(ticketStateID int, t TicketState) (TicketStat
 		return ticketState, err
 	}
 
-	if err = c.SendWithAuth(req, &ticketState); err != nil {
+	if err = c.sendWithAuth(req, &ticketState); err != nil {
 		return ticketState, err
 	}
 
@@ -86,7 +86,7 @@ func (c *Client) TicketStateDelete(ticketStateID int) error {
 		return err
 	}
 
-	if err = c.SendWithAuth(req, nil); err != nil {
+	if err = c.sendWithAuth(req, nil); err != nil {
 		return err
 	}
 

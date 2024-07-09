@@ -10,7 +10,7 @@ func (c *Client) UserAccessTokenList() (*[]map[string]interface{}, error) {
 		return &userAccessTokens, err
 	}
 
-	if err = c.SendWithAuth(req, &userAccessTokens); err != nil {
+	if err = c.sendWithAuth(req, &userAccessTokens); err != nil {
 		return &userAccessTokens, err
 	}
 
@@ -25,7 +25,7 @@ func (c *Client) UserAccessTokenCreate(t *map[string]interface{}) (*map[string]i
 		return &userAccessToken, err
 	}
 
-	if err = c.SendWithAuth(req, &userAccessToken); err != nil {
+	if err = c.sendWithAuth(req, &userAccessToken); err != nil {
 		return &userAccessToken, err
 	}
 
@@ -39,7 +39,7 @@ func (c *Client) UserAccessTokenDelete(tokenID int) error {
 		return err
 	}
 
-	if err = c.SendWithAuth(req, nil); err != nil {
+	if err = c.sendWithAuth(req, nil); err != nil {
 		return err
 	}
 
