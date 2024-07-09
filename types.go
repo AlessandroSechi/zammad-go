@@ -6,15 +6,17 @@ import (
 )
 
 type (
+	// Client is used to query Zammad. It is safe to use concurrently.
 	Client struct {
 		Client   Doer
 		Username string
 		Password string
 		Token    string
 		OAuth    string
-		Url      string
+		Url      string // Url is the URL of Zammad.
 	}
 
+	// TODO: not used yet.
 	ErrorResponse struct {
 		Description      string `json:"error"`
 		DescriptionHuman string `json:"error_human"`
