@@ -14,6 +14,7 @@ type testClient struct {
 	body []byte
 }
 
+// Do implements the Doer interface.
 func (t testClient) Do(*http.Request) (*http.Response, error) {
 	r := &http.Response{
 		Body:       io.NopCloser(bytes.NewBuffer(t.body)),
@@ -28,7 +29,7 @@ var tests = []struct {
 	Expect int    // expected amount of things
 }{
 	{"ticketlist.json", "TicketList", 2},
-	{"ticketsearch.json", "TicketSearch", 2},
+	{"ticketsearch.json", "TicketSearch", 3},
 }
 
 func TestTicketList(t *testing.T) {
@@ -41,6 +42,12 @@ func TestTicketList(t *testing.T) {
 			switch tt.Func {
 			case "TicketList":
 				ts, err := z.TicketList()
+				if len(ts) != tt.Expect {
+					t.Errorf("expected %d tickets, got %d", tt.Expect, len(ts))
+				}
+				outerr = err
+			case "TicketSearch":
+				ts, err := z.TicketSearch("does-not-matter", 0)
 				if len(ts) != tt.Expect {
 					t.Errorf("expected %d tickets, got %d", tt.Expect, len(ts))
 				}
