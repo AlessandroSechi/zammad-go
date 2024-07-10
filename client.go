@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -86,6 +87,12 @@ func (c *Client) Send(req *http.Request, v interface{}) error {
 		}
 
 		return errResp
+	}
+
+	if c.Debug {
+		io.Copy(os.Stderr, resp.Body)
+		fmt.Fprintln(os.Stderr, "")
+		return nil
 	}
 
 	if v == nil {

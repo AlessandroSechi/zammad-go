@@ -27,7 +27,7 @@ func (c *Client) OnlineNotificationList() ([]OnlineNotification, error) {
 		return notifications, err
 	}
 
-	if err = c.SendWithAuth(req, notifications); err != nil {
+	if err = c.SendWithAuth(req, &notifications); err != nil {
 		return notifications, err
 	}
 
@@ -42,7 +42,7 @@ func (c *Client) OnlineNotificationShow(notificationID int) (OnlineNotification,
 		return notification, err
 	}
 
-	if err = c.SendWithAuth(req, notification); err != nil {
+	if err = c.SendWithAuth(req, &notification); err != nil {
 		return notification, err
 	}
 

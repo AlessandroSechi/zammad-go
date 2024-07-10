@@ -31,7 +31,7 @@ func (c *Client) OrganizationList() ([]Organization, error) {
 		return organizations, err
 	}
 
-	if err = c.SendWithAuth(req, organizations); err != nil {
+	if err = c.SendWithAuth(req, &organizations); err != nil {
 		return organizations, err
 	}
 
@@ -46,7 +46,7 @@ func (c *Client) OrganizationSearch(query string, limit int) ([]Organization, er
 		return organizations, err
 	}
 
-	if err = c.SendWithAuth(req, organizations); err != nil {
+	if err = c.SendWithAuth(req, &organizations); err != nil {
 		return organizations, err
 	}
 
@@ -61,7 +61,7 @@ func (c *Client) OrganizationShow(organizationID int) (Organization, error) {
 		return organization, err
 	}
 
-	if err = c.SendWithAuth(req, organization); err != nil {
+	if err = c.SendWithAuth(req, &organization); err != nil {
 		return organization, err
 	}
 
@@ -76,7 +76,7 @@ func (c *Client) OrganizationCreate(o Organization) (Organization, error) {
 		return organization, err
 	}
 
-	if err = c.SendWithAuth(req, organization); err != nil {
+	if err = c.SendWithAuth(req, &organization); err != nil {
 		return organization, err
 	}
 
@@ -91,7 +91,7 @@ func (c *Client) OrganizationUpdate(organizationID int, o Organization) (Organiz
 		return organization, err
 	}
 
-	if err = c.SendWithAuth(req, organization); err != nil {
+	if err = c.SendWithAuth(req, &organization); err != nil {
 		return organization, err
 	}
 

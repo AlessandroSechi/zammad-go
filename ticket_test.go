@@ -23,7 +23,7 @@ func (t testClient) Do(*http.Request) (*http.Response, error) {
 	return r, nil
 }
 
-var tests = []struct {
+var ticketTests = []struct {
 	File   string // json file to use
 	Func   string // function to call
 	Expect int    // expected amount of things
@@ -32,9 +32,9 @@ var tests = []struct {
 	{"ticketsearch.json", "TicketSearch", 3},
 }
 
-func TestTicketList(t *testing.T) {
+func TestTicket(t *testing.T) {
 	z := &Client{}
-	for i, tt := range tests {
+	for i, tt := range ticketTests {
 		data, _ := os.ReadFile(path.Join("testdata", tt.File))
 		z.Client = testClient{body: data}
 		t.Run(fmt.Sprintf("%0d-%s", i, tt.Func), func(t *testing.T) {

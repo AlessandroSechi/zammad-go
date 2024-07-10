@@ -1,0 +1,962 @@
+{
+  "tokens": [
+    {
+      "id": 10,
+      "user_id": 13,
+      "name": "test",
+      "action": "api",
+      "preferences": {
+        "permission": [
+          "admin",
+          "ticket.agent",
+          "user_preferences.access_token"
+        ]
+      },
+      "last_used_at": "2024-07-10T09:01:18.911Z",
+      "expires_at": "2024-07-13",
+      "created_at": "2024-07-10T08:03:26.763Z",
+      "updated_at": "2024-07-10T09:01:18.912Z"
+    }
+  ],
+  "permissions": [
+    {
+      "id": 1,
+      "name": "admin",
+      "note": "Admin Interface",
+      "preferences": {},
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:55.970Z",
+      "updated_at": "2024-06-13T10:14:55.970Z"
+    },
+    {
+      "id": 35,
+      "name": "admin.api",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "API"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.170Z",
+      "updated_at": "2024-06-13T10:14:56.170Z"
+    },
+    {
+      "id": 27,
+      "name": "admin.branding",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Branding"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.125Z",
+      "updated_at": "2024-06-13T10:14:56.125Z"
+    },
+    {
+      "id": 11,
+      "name": "admin.calendar",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Calendar"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.030Z",
+      "updated_at": "2024-06-13T10:14:56.030Z"
+    },
+    {
+      "id": 26,
+      "name": "admin.channel_chat",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Channel - Chat"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.119Z",
+      "updated_at": "2024-06-13T10:14:56.119Z"
+    },
+    {
+      "id": 18,
+      "name": "admin.channel_email",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Channel - Email"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.070Z",
+      "updated_at": "2024-06-13T10:14:56.070Z"
+    },
+    {
+      "id": 20,
+      "name": "admin.channel_facebook",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Channel - Facebook"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.082Z",
+      "updated_at": "2024-06-13T10:14:56.082Z"
+    },
+    {
+      "id": 17,
+      "name": "admin.channel_formular",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Channel - Form"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.065Z",
+      "updated_at": "2024-06-13T10:14:56.065Z"
+    },
+    {
+      "id": 23,
+      "name": "admin.channel_google",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Channel - Google"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.100Z",
+      "updated_at": "2024-06-13T10:14:56.100Z"
+    },
+    {
+      "id": 24,
+      "name": "admin.channel_microsoft365",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Channel - Microsoft 365"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.106Z",
+      "updated_at": "2024-06-13T10:14:56.106Z"
+    },
+    {
+      "id": 25,
+      "name": "admin.channel_sms",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Channel - SMS"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.112Z",
+      "updated_at": "2024-06-13T10:14:56.112Z"
+    },
+    {
+      "id": 21,
+      "name": "admin.channel_telegram",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Channel - Telegram"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.088Z",
+      "updated_at": "2024-06-13T10:14:56.088Z"
+    },
+    {
+      "id": 19,
+      "name": "admin.channel_twitter",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Channel - Twitter"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.076Z",
+      "updated_at": "2024-06-13T10:14:56.076Z"
+    },
+    {
+      "id": 16,
+      "name": "admin.channel_web",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Channel - Web"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.059Z",
+      "updated_at": "2024-06-13T10:14:56.059Z"
+    },
+    {
+      "id": 22,
+      "name": "admin.channel_whatsapp",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Channel - WhatsApp"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.094Z",
+      "updated_at": "2024-06-13T10:14:56.094Z"
+    },
+    {
+      "id": 44,
+      "name": "admin.core_workflow",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Core Workflow"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.220Z",
+      "updated_at": "2024-06-13T10:14:56.220Z"
+    },
+    {
+      "id": 40,
+      "name": "admin.data_privacy",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Data Privacy"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.198Z",
+      "updated_at": "2024-06-13T10:14:56.198Z"
+    },
+    {
+      "id": 3,
+      "name": "admin.group",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Groups"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:55.985Z",
+      "updated_at": "2024-06-13T10:14:55.985Z"
+    },
+    {
+      "id": 34,
+      "name": "admin.integration",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Integrations"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.164Z",
+      "updated_at": "2024-06-13T10:14:56.164Z"
+    },
+    {
+      "id": 66,
+      "name": "admin.knowledge_base",
+      "note": "Create and set up %s",
+      "preferences": {
+        "translations": [
+          "Knowledge Base"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.342Z",
+      "updated_at": "2024-06-13T10:14:56.342Z"
+    },
+    {
+      "id": 9,
+      "name": "admin.macro",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Macros"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.019Z",
+      "updated_at": "2024-06-13T10:14:56.019Z"
+    },
+    {
+      "id": 41,
+      "name": "admin.maintenance",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Maintenance"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.204Z",
+      "updated_at": "2024-06-13T10:14:56.204Z"
+    },
+    {
+      "id": 39,
+      "name": "admin.monitoring",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Monitoring"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.193Z",
+      "updated_at": "2024-06-13T10:14:56.193Z"
+    },
+    {
+      "id": 36,
+      "name": "admin.object",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Objects"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.176Z",
+      "updated_at": "2024-06-13T10:14:56.176Z"
+    },
+    {
+      "id": 5,
+      "name": "admin.organization",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Organizations"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:55.997Z",
+      "updated_at": "2024-06-13T10:14:55.997Z"
+    },
+    {
+      "id": 6,
+      "name": "admin.overview",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Overviews"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.002Z",
+      "updated_at": "2024-06-13T10:14:56.002Z"
+    },
+    {
+      "id": 33,
+      "name": "admin.package",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Packages"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.158Z",
+      "updated_at": "2024-06-13T10:14:56.158Z"
+    },
+    {
+      "id": 45,
+      "name": "admin.public_links",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Public Links"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.226Z",
+      "updated_at": "2024-06-13T10:14:56.226Z"
+    },
+    {
+      "id": 15,
+      "name": "admin.report_profile",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Report Profiles"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.053Z",
+      "updated_at": "2024-06-13T10:14:56.053Z"
+    },
+    {
+      "id": 4,
+      "name": "admin.role",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Roles"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:55.991Z",
+      "updated_at": "2024-06-13T10:14:55.991Z"
+    },
+    {
+      "id": 14,
+      "name": "admin.scheduler",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Scheduler"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.048Z",
+      "updated_at": "2024-06-13T10:14:56.048Z"
+    },
+    {
+      "id": 29,
+      "name": "admin.security",
+      "note": "Manage %s Settings",
+      "preferences": {
+        "translations": [
+          "Security"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.136Z",
+      "updated_at": "2024-06-13T10:14:56.136Z"
+    },
+    {
+      "id": 42,
+      "name": "admin.session",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Sessions"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.209Z",
+      "updated_at": "2024-06-13T10:14:56.209Z"
+    },
+    {
+      "id": 28,
+      "name": "admin.setting_system",
+      "note": "Manage %s Settings",
+      "preferences": {
+        "translations": [
+          "System"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.130Z",
+      "updated_at": "2024-06-13T10:14:56.130Z"
+    },
+    {
+      "id": 12,
+      "name": "admin.sla",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "SLA"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.036Z",
+      "updated_at": "2024-06-13T10:14:56.036Z"
+    },
+    {
+      "id": 10,
+      "name": "admin.tag",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Tags"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.025Z",
+      "updated_at": "2024-06-13T10:14:56.025Z"
+    },
+    {
+      "id": 37,
+      "name": "admin.template",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Templates"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.181Z",
+      "updated_at": "2024-06-13T10:14:56.181Z"
+    },
+    {
+      "id": 7,
+      "name": "admin.text_module",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Text Modules"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.008Z",
+      "updated_at": "2024-06-13T10:14:56.008Z"
+    },
+    {
+      "id": 30,
+      "name": "admin.ticket",
+      "note": "Manage %s Settings",
+      "preferences": {
+        "translations": [
+          "Ticket"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.141Z",
+      "updated_at": "2024-06-13T10:14:56.141Z"
+    },
+    {
+      "id": 32,
+      "name": "admin.ticket_priority",
+      "note": "Manage %s Settings",
+      "preferences": {
+        "translations": [
+          "Ticket Priorities"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.153Z",
+      "updated_at": "2024-06-13T10:14:56.153Z"
+    },
+    {
+      "id": 31,
+      "name": "admin.ticket_state",
+      "note": "Manage %s Settings",
+      "preferences": {
+        "translations": [
+          "Ticket States"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.147Z",
+      "updated_at": "2024-06-13T10:14:56.147Z"
+    },
+    {
+      "id": 8,
+      "name": "admin.time_accounting",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Time Accounting"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.014Z",
+      "updated_at": "2024-06-13T10:14:56.014Z"
+    },
+    {
+      "id": 38,
+      "name": "admin.translation",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Translations"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.187Z",
+      "updated_at": "2024-06-13T10:14:56.187Z"
+    },
+    {
+      "id": 13,
+      "name": "admin.trigger",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Triggers"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.041Z",
+      "updated_at": "2024-06-13T10:14:56.041Z"
+    },
+    {
+      "id": 2,
+      "name": "admin.user",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Users"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:55.979Z",
+      "updated_at": "2024-06-13T10:14:55.979Z"
+    },
+    {
+      "id": 43,
+      "name": "admin.webhook",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Webhooks"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.214Z",
+      "updated_at": "2024-06-13T10:14:56.214Z"
+    },
+    {
+      "id": 62,
+      "name": "chat",
+      "note": "Access to %s",
+      "preferences": {
+        "translations": [
+          "Chat"
+        ],
+        "disabled": true
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.321Z",
+      "updated_at": "2024-06-13T10:14:56.321Z"
+    },
+    {
+      "id": 63,
+      "name": "chat.agent",
+      "note": "Access to %s",
+      "preferences": {
+        "translations": [
+          "Chat"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.326Z",
+      "updated_at": "2024-06-13T10:14:56.326Z"
+    },
+    {
+      "id": 64,
+      "name": "cti",
+      "note": "CTI",
+      "preferences": {
+        "disabled": true
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.331Z",
+      "updated_at": "2024-06-13T10:14:56.331Z"
+    },
+    {
+      "id": 65,
+      "name": "cti.agent",
+      "note": "Access to %s",
+      "preferences": {
+        "translations": [
+          "CTI"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.336Z",
+      "updated_at": "2024-06-13T10:14:56.336Z"
+    },
+    {
+      "id": 67,
+      "name": "knowledge_base",
+      "note": "Knowledge Base",
+      "preferences": {
+        "disabled": true
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.359Z",
+      "updated_at": "2024-06-13T10:14:56.359Z"
+    },
+    {
+      "id": 68,
+      "name": "knowledge_base.editor",
+      "note": "Knowledge Base Editor",
+      "preferences": {},
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.365Z",
+      "updated_at": "2024-06-13T10:14:56.365Z"
+    },
+    {
+      "id": 69,
+      "name": "knowledge_base.reader",
+      "note": "Knowledge Base Reader",
+      "preferences": {},
+      "active": true,
+      "allow_signup": true,
+      "created_at": "2024-06-13T10:14:56.370Z",
+      "updated_at": "2024-06-13T10:14:56.370Z"
+    },
+    {
+      "id": 58,
+      "name": "report",
+      "note": "Report Interface",
+      "preferences": {},
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.299Z",
+      "updated_at": "2024-06-13T10:14:56.299Z"
+    },
+    {
+      "id": 59,
+      "name": "ticket",
+      "note": "Ticket Interface",
+      "preferences": {
+        "disabled": true
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.304Z",
+      "updated_at": "2024-06-13T10:14:56.304Z"
+    },
+    {
+      "id": 60,
+      "name": "ticket.agent",
+      "note": "Access to Agent Tickets based on Group Access",
+      "preferences": {
+        "plugin": [
+          "groups"
+        ]
+      },
+      "active": true,
+      "allow_signup": false,
+      "created_at": "2024-06-13T10:14:56.310Z",
+      "updated_at": "2024-06-13T10:14:56.310Z"
+    },
+    {
+      "id": 46,
+      "name": "user_preferences",
+      "note": "User Preferences",
+      "preferences": {},
+      "active": true,
+      "allow_signup": true,
+      "created_at": "2024-06-13T10:14:56.231Z",
+      "updated_at": "2024-06-13T10:14:56.231Z"
+    },
+    {
+      "id": 49,
+      "name": "user_preferences.access_token",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Token Access"
+        ]
+      },
+      "active": true,
+      "allow_signup": true,
+      "created_at": "2024-06-13T10:14:56.247Z",
+      "updated_at": "2024-06-13T10:14:56.247Z"
+    },
+    {
+      "id": 57,
+      "name": "user_preferences.appearance",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Appearance"
+        ]
+      },
+      "active": true,
+      "allow_signup": true,
+      "created_at": "2024-06-13T10:14:56.293Z",
+      "updated_at": "2024-06-13T10:14:56.293Z"
+    },
+    {
+      "id": 53,
+      "name": "user_preferences.avatar",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Avatar"
+        ]
+      },
+      "active": true,
+      "allow_signup": true,
+      "created_at": "2024-06-13T10:14:56.270Z",
+      "updated_at": "2024-06-13T10:14:56.270Z"
+    },
+    {
+      "id": 54,
+      "name": "user_preferences.calendar",
+      "note": "Access to %s",
+      "preferences": {
+        "translations": [
+          "Calendars"
+        ],
+        "required": [
+          "ticket.agent"
+        ]
+      },
+      "active": true,
+      "allow_signup": true,
+      "created_at": "2024-06-13T10:14:56.276Z",
+      "updated_at": "2024-06-13T10:14:56.276Z"
+    },
+    {
+      "id": 52,
+      "name": "user_preferences.device",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Devices"
+        ]
+      },
+      "active": true,
+      "allow_signup": true,
+      "created_at": "2024-06-13T10:14:56.265Z",
+      "updated_at": "2024-06-13T10:14:56.265Z"
+    },
+    {
+      "id": 50,
+      "name": "user_preferences.language",
+      "note": "Change %s",
+      "preferences": {
+        "translations": [
+          "Language"
+        ]
+      },
+      "active": true,
+      "allow_signup": true,
+      "created_at": "2024-06-13T10:14:56.253Z",
+      "updated_at": "2024-06-13T10:14:56.253Z"
+    },
+    {
+      "id": 51,
+      "name": "user_preferences.linked_accounts",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Linked Accounts"
+        ]
+      },
+      "active": true,
+      "allow_signup": true,
+      "created_at": "2024-06-13T10:14:56.259Z",
+      "updated_at": "2024-06-13T10:14:56.259Z"
+    },
+    {
+      "id": 48,
+      "name": "user_preferences.notifications",
+      "note": "Manage %s",
+      "preferences": {
+        "translations": [
+          "Notifications"
+        ],
+        "required": [
+          "ticket.agent"
+        ]
+      },
+      "active": true,
+      "allow_signup": true,
+      "created_at": "2024-06-13T10:14:56.242Z",
+      "updated_at": "2024-06-13T10:14:56.242Z"
+    },
+    {
+      "id": 55,
+      "name": "user_preferences.out_of_office",
+      "note": "Change %s",
+      "preferences": {
+        "translations": [
+          "Out of Office"
+        ],
+        "required": [
+          "ticket.agent"
+        ]
+      },
+      "active": true,
+      "allow_signup": true,
+      "created_at": "2024-06-13T10:14:56.282Z",
+      "updated_at": "2024-06-13T10:14:56.282Z"
+    },
+    {
+      "id": 56,
+      "name": "user_preferences.overview_sorting",
+      "note": "Change %s",
+      "preferences": {
+        "translations": [
+          "Order of Overviews"
+        ],
+        "required": [
+          "ticket.agent"
+        ]
+      },
+      "active": true,
+      "allow_signup": true,
+      "created_at": "2024-06-13T10:14:56.287Z",
+      "updated_at": "2024-06-13T10:14:56.287Z"
+    },
+    {
+      "id": 47,
+      "name": "user_preferences.password",
+      "note": "Change %s",
+      "preferences": {
+        "translations": [
+          "Password"
+        ]
+      },
+      "active": true,
+      "allow_signup": true,
+      "created_at": "2024-06-13T10:14:56.236Z",
+      "updated_at": "2024-06-13T10:14:56.236Z"
+    }
+  ]
+}

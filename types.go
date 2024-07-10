@@ -18,6 +18,7 @@ type (
 		// See https://docs.zammad.org/en/latest/api/intro.html#actions-on-behalf-of-other-users. If not nil
 		// *and* returning a non empty string, this value will be used in the request.
 		FromFunc func() string
+		Debug    bool
 	}
 
 	// TODO: not used yet.
