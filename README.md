@@ -1,9 +1,9 @@
 # Go client for Zammad REST API
 
 This is an Go implementation to lets you use the Zammad's REST API, see https://zammad.com/en/product/features/rest-api
-for an introduction.
+for an introduction. The documentation in the code has further links to details of the Zammad API.
 
-### Example
+## Example
 
 ```go
 package main
