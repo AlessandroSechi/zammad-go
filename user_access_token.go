@@ -74,9 +74,7 @@ func (c *Client) UserAccessTokenList() ([]UserAccessToken, error) {
 	}
 
 	userAccessTokens := make([]UserAccessToken, len(tockList.Tokens))
-	for i, t := range tockList.Tokens {
-		userAccessTokens[i] = t
-	}
+	copy(userAccessTokens, tockList.Tokens)
 	if len(tockList.Tokens) > 0 {
 		userAccessTokens[0].Permissions = tockList.Permissions
 	}
