@@ -2,10 +2,11 @@ package zammad
 
 import (
 	"fmt"
+	"net/url"
 	"time"
 )
 
-// Organization represent a Zammad organisation. See https://docs.zammad.org/en/latest/api/organization.html
+// Organization represent a Zammad organisation. See https://docs.zammad.org/en/latest/api/organization.html.
 type Organization struct {
 	ID                 int       `json:"id"`
 	Name               string    `json:"name"`
@@ -41,7 +42,7 @@ func (c *Client) OrganizationList() ([]Organization, error) {
 func (c *Client) OrganizationSearch(query string, limit int) ([]Organization, error) {
 	var organizations []Organization
 
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/organizations/search?query=%slimit=%d", query, limit)), nil)
+	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/organizations/search?query=%slimit=%d", url.QueryEscape(query), limit)), nil)
 	if err != nil {
 		return organizations, err
 	}

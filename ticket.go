@@ -2,6 +2,7 @@ package zammad
 
 import (
 	"fmt"
+	"net/url"
 	"time"
 )
 
@@ -44,7 +45,6 @@ func (c *Client) TicketList() ([]Ticket, error) {
 }
 
 // TicketSearch searches for tickets. See https://docs.zammad.org/en/latest/api/ticket/index.html#search.
-// Note that query must be url.QueryEscape-ed.
 func (c *Client) TicketSearch(query string, limit int) ([]Ticket, error) {
 	type Assets struct {
 		AssetTicket map[int]Ticket `json:"ticket"`
@@ -57,7 +57,7 @@ func (c *Client) TicketSearch(query string, limit int) ([]Ticket, error) {
 	}
 
 	var ticksearch TickSearch
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/tickets/search?query=%s&limit=%d", query, limit)), nil)
+	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/tickets/search?query=%s&limit=%d", url.QueryEscape(query), limit)), nil)
 	if err != nil {
 		return nil, err
 	}
