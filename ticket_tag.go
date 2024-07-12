@@ -12,7 +12,7 @@ func (c *Client) TicketTagByTicket(ticketID int) ([]Tag, error) {
 		return nil, err
 	}
 
-	if err = c.SendWithAuth(req, &tags); err != nil {
+	if err = c.sendWithAuth(req, &tags); err != nil {
 		return nil, err
 	}
 

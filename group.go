@@ -28,7 +28,7 @@ func (c *Client) GroupList() ([]Group, error) {
 		return nil, err
 	}
 
-	if err = c.SendWithAuth(req, &groups); err != nil {
+	if err = c.sendWithAuth(req, &groups); err != nil {
 		return nil, err
 	}
 
@@ -43,7 +43,7 @@ func (c *Client) GroupShow(groupID int) (Group, error) {
 		return group, err
 	}
 
-	if err = c.SendWithAuth(req, &group); err != nil {
+	if err = c.sendWithAuth(req, &group); err != nil {
 		return group, err
 	}
 
@@ -58,7 +58,7 @@ func (c *Client) GroupCreate(g Group) (Group, error) {
 		return group, err
 	}
 
-	if err = c.SendWithAuth(req, &group); err != nil {
+	if err = c.sendWithAuth(req, &group); err != nil {
 		return group, err
 	}
 
@@ -73,7 +73,7 @@ func (c *Client) GroupUpdate(groupID int, g Group) (Group, error) {
 		return group, err
 	}
 
-	if err = c.SendWithAuth(req, &group); err != nil {
+	if err = c.sendWithAuth(req, &group); err != nil {
 		return group, err
 	}
 
@@ -87,7 +87,7 @@ func (c *Client) GroupDelete(groupID int) error {
 		return err
 	}
 
-	if err = c.SendWithAuth(req, nil); err != nil {
+	if err = c.sendWithAuth(req, nil); err != nil {
 		return err
 	}
 
