@@ -17,7 +17,7 @@ func (c *Client) ObjectList() ([]Object, error) {
 		return objects, err
 	}
 
-	if err = c.SendWithAuth(req, objects); err != nil {
+	if err = c.sendWithAuth(req, objects); err != nil {
 		return objects, err
 	}
 
@@ -32,7 +32,7 @@ func (c *Client) ObjectShow(objectID int) (Object, error) {
 		return object, err
 	}
 
-	if err = c.SendWithAuth(req, object); err != nil {
+	if err = c.sendWithAuth(req, object); err != nil {
 		return object, err
 	}
 
@@ -47,7 +47,7 @@ func (c *Client) ObjectCreate(o Object) (Object, error) {
 		return object, err
 	}
 
-	if err = c.SendWithAuth(req, object); err != nil {
+	if err = c.sendWithAuth(req, object); err != nil {
 		return object, err
 	}
 
@@ -62,7 +62,7 @@ func (c *Client) ObjectUpdate(objectID int, o Object) (Object, error) {
 		return object, err
 	}
 
-	if err = c.SendWithAuth(req, object); err != nil {
+	if err = c.sendWithAuth(req, object); err != nil {
 		return object, err
 	}
 
@@ -76,7 +76,7 @@ func (c *Client) ObjectExecuteDatabaseMigration() error {
 		return err
 	}
 
-	if err = c.SendWithAuth(req, nil); err != nil {
+	if err = c.sendWithAuth(req, nil); err != nil {
 		return err
 	}
 

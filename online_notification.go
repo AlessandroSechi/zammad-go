@@ -27,7 +27,7 @@ func (c *Client) OnlineNotificationList() ([]OnlineNotification, error) {
 		return notifications, err
 	}
 
-	if err = c.SendWithAuth(req, &notifications); err != nil {
+	if err = c.sendWithAuth(req, &notifications); err != nil {
 		return notifications, err
 	}
 
@@ -42,7 +42,7 @@ func (c *Client) OnlineNotificationShow(notificationID int) (OnlineNotification,
 		return notification, err
 	}
 
-	if err = c.SendWithAuth(req, &notification); err != nil {
+	if err = c.sendWithAuth(req, &notification); err != nil {
 		return notification, err
 	}
 
@@ -57,7 +57,7 @@ func (c *Client) OnlineNotificationUpdate(notificationID int, n OnlineNotificati
 		return notification, err
 	}
 
-	if err = c.SendWithAuth(req, notification); err != nil {
+	if err = c.sendWithAuth(req, notification); err != nil {
 		return notification, err
 	}
 
@@ -71,7 +71,7 @@ func (c *Client) OnlineNotificationDelete(notificationID int) error {
 		return err
 	}
 
-	if err = c.SendWithAuth(req, nil); err != nil {
+	if err = c.sendWithAuth(req, nil); err != nil {
 		return err
 	}
 
@@ -85,7 +85,7 @@ func (c *Client) OnlineNotificationMarkAllAsRead() error {
 		return err
 	}
 
-	if err = c.SendWithAuth(req, nil); err != nil {
+	if err = c.sendWithAuth(req, nil); err != nil {
 		return err
 	}
 

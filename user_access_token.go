@@ -69,7 +69,7 @@ func (c *Client) UserAccessTokenList() ([]UserAccessToken, error) {
 		return nil, err
 	}
 
-	if err = c.SendWithAuth(req, &tockList); err != nil {
+	if err = c.sendWithAuth(req, &tockList); err != nil {
 		return nil, err
 	}
 
@@ -90,7 +90,7 @@ func (c *Client) UserAccessTokenCreate(t UserAccessToken) (UserAccessToken, erro
 		return userAccessToken, err
 	}
 
-	if err = c.SendWithAuth(req, &userAccessToken); err != nil {
+	if err = c.sendWithAuth(req, &userAccessToken); err != nil {
 		return userAccessToken, err
 	}
 
@@ -104,7 +104,7 @@ func (c *Client) UserAccessTokenDelete(tokenID int) error {
 		return err
 	}
 
-	if err = c.SendWithAuth(req, nil); err != nil {
+	if err = c.sendWithAuth(req, nil); err != nil {
 		return err
 	}
 

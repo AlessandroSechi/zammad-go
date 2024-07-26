@@ -6,7 +6,9 @@ import (
 )
 
 type (
-	// Client is used to query Zammad. It is safe to use concurrently.
+	// Client is used to query Zammad. It is safe to use concurrently. If you (inadvertly) added
+	// multiple authencation options that will be applied in the order, basic auth, token based, and
+	// then oauth. Where the last one set, wins.
 	Client struct {
 		Client   Doer
 		Username string
@@ -20,7 +22,7 @@ type (
 		FromFunc func() string
 	}
 
-	// TODO: not used yet.
+	// ErrorResponse is the response returned by Zammad when an error occured.
 	ErrorResponse struct {
 		Description      string `json:"error"`
 		DescriptionHuman string `json:"error_human"`

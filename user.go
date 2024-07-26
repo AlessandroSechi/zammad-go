@@ -26,7 +26,7 @@ func (c *Client) UserMe() (User, error) {
 		return user, err
 	}
 
-	if err = c.SendWithAuth(req, &user); err != nil {
+	if err = c.sendWithAuth(req, &user); err != nil {
 		return user, err
 	}
 
@@ -41,7 +41,7 @@ func (c *Client) UserList() ([]User, error) {
 		return nil, err
 	}
 
-	if err = c.SendWithAuth(req, &users); err != nil {
+	if err = c.sendWithAuth(req, &users); err != nil {
 		return nil, err
 	}
 
@@ -56,7 +56,7 @@ func (c *Client) UserSearch(query string, limit int) ([]User, error) {
 		return nil, err
 	}
 
-	if err = c.SendWithAuth(req, &users); err != nil {
+	if err = c.sendWithAuth(req, &users); err != nil {
 		return nil, err
 	}
 
@@ -71,7 +71,7 @@ func (c *Client) UserShow(userID int) (User, error) {
 		return user, err
 	}
 
-	if err = c.SendWithAuth(req, &user); err != nil {
+	if err = c.sendWithAuth(req, &user); err != nil {
 		return user, err
 	}
 
@@ -86,7 +86,7 @@ func (c *Client) UserCreate(u User) (User, error) {
 		return user, err
 	}
 
-	if err = c.SendWithAuth(req, &user); err != nil {
+	if err = c.sendWithAuth(req, &user); err != nil {
 		return user, err
 	}
 
@@ -101,7 +101,7 @@ func (c *Client) UserUpdate(userID int, u User) (User, error) {
 		return user, err
 	}
 
-	if err = c.SendWithAuth(req, &user); err != nil {
+	if err = c.sendWithAuth(req, &user); err != nil {
 		return user, err
 	}
 
@@ -115,7 +115,7 @@ func (c *Client) UserDelete(userID int) error {
 		return err
 	}
 
-	if err = c.SendWithAuth(req, nil); err != nil {
+	if err = c.sendWithAuth(req, nil); err != nil {
 		return err
 	}
 

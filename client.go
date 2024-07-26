@@ -3,7 +3,6 @@ package zammad
 import (
 	"bytes"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -14,28 +13,6 @@ import (
 // client uses a timeout of 5 seconds.
 func New(URL string) *Client {
 	return &Client{Client: &http.Client{Timeout: 5 * time.Second}, Url: URL}
-}
-
-func NewClient(client *Client) (*Client, error) {
-	if client.Url == "" {
-		return nil, errors.New("APIBase is required to create a Client")
-	}
-
-	if (client.Username == "" || client.Password == "") && client.Token == "" && client.OAuth == "" {
-		return nil, errors.New("Username and password, token or OAuth2 are required to create a Client")
-	}
-
-	if (client.Username != "" || client.Password != "") && (client.Token != "" || client.OAuth != "") {
-		return nil, errors.New("Only one authentication type between username and password, token and OAuth is supported")
-	}
-
-	if client.Token != "" && client.OAuth != "" {
-		return nil, errors.New("Only one between token and oauth must be specified")
-	}
-
-	client.Client = &http.Client{}
-
-	return client, nil
 }
 
 // NewRequest constructs a request and converts the payload to JSON.
@@ -65,9 +42,9 @@ func (c *Client) NewRequest(method, url string, payload interface{}) (*http.Requ
 	return req, nil
 }
 
-// Send makes a request to the API, the response body will be unmarshaled into v, or if v is an io.Writer, the response
+// send makes a request to the API, the response body will be unmarshaled into v, or if v is an io.Writer, the response
 // will be written to it without decoding. This can be helpful when debugging.
-func (c *Client) Send(req *http.Request, v interface{}) error {
+func (c *Client) send(req *http.Request, v interface{}) error {
 	resp, err := c.Client.Do(req)
 	if err != nil {
 		return err
@@ -103,8 +80,8 @@ func (c *Client) Send(req *http.Request, v interface{}) error {
 	return json.NewDecoder(resp.Body).Decode(v)
 }
 
-// SendWithAuth makes a request to the API and apply the proper authentication header automatically.
-func (c *Client) SendWithAuth(req *http.Request, v interface{}) error {
+// sendWithAuth makes a request to the API and apply the proper authentication header automatically.
+func (c *Client) sendWithAuth(req *http.Request, v interface{}) error {
 	//Detect Authentication Type
 	if c.Username != "" && c.Password != "" {
 		req.SetBasicAuth(c.Username, c.Password)
@@ -116,5 +93,5 @@ func (c *Client) SendWithAuth(req *http.Request, v interface{}) error {
 		req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", c.OAuth))
 	}
 
-	return c.Send(req, v)
+	return c.send(req, v)
 }
