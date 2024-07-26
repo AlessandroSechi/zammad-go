@@ -1,8 +1,11 @@
 package zammad
 
-import "fmt"
+import (
+	"fmt"
+	"net/url"
+)
 
-// Tag is a Zammad tag.
+// Tag is a Zammad tag. See https://docs.zammad.org/en/latest/api/ticket/tags.html.
 type Tag struct {
 	ID   int    `json:"id"`
 	Name string `json:"name"`
@@ -11,7 +14,7 @@ type Tag struct {
 func (c *Client) TagSearch(term string) ([]Tag, error) {
 	var tags []Tag
 
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/tag_search?term=%s", term)), nil)
+	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/tag_search?term=%s", url.QueryEscape(term))), nil)
 	if err != nil {
 		return nil, err
 	}

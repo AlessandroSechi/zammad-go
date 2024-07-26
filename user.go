@@ -2,10 +2,11 @@ package zammad
 
 import (
 	"fmt"
+	"net/url"
 	"time"
 )
 
-// User is a Zammad user.
+// User is a Zammad user. See https://docs.zammad.org/en/latest/api/user.html.
 type User struct {
 	ID             int       `json:"id"`
 	OrganizationID int       `json:"organization_id"`
@@ -51,7 +52,7 @@ func (c *Client) UserList() ([]User, error) {
 func (c *Client) UserSearch(query string, limit int) ([]User, error) {
 	var users []User
 
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/users/search?query=%s&limit=%d", query, limit)), nil)
+	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/users/search?query=%s&limit=%d", url.QueryEscape(query), limit)), nil)
 	if err != nil {
 		return nil, err
 	}
