@@ -30,3 +30,11 @@ func main() {
     }
 }
 ```
+
+## Development
+
+If you want to test the code against a live zammad instance, you'll need to create an access token
+and set the following environment variables before testing:
+
+* `ZAMMAD_INSTANCE`: this is the URL of you zammad instance
+* `ZAMMAD_TOKEN`: this the access token you can use
