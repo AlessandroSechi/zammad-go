@@ -7,7 +7,7 @@ import (
 
 // Group is a Zammad group.
 type Group struct {
-	ID                 int       `json:"id"`
+	ID                 int       `json:"id,omitempty"`
 	Name               string    `json:"name"`
 	NameLast           string    `json:"name_last"`
 	FollowUpPossible   string    `json:"follow_up_possible"`

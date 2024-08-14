@@ -8,25 +8,25 @@ import (
 
 // Ticket is a zammad ticket.
 type Ticket struct {
-	ID                    int       `json:"id"`
-	GroupID               int       `json:"group_id"`
-	PriorityID            int       `json:"priority_id"`
-	StateID               int       `json:"state_id"`
+	ID                    int       `json:"id,omitempty"`
+	GroupID               int       `json:"group_id,omitempty"`
+	PriorityID            int       `json:"priority_id,omitempty"`
+	StateID               int       `json:"state_id,omitempty"`
 	OrganizationID        int       `json:"organization_id"`
-	Number                string    `json:"number"`
+	Number                string    `json:"number,omitempty"`
 	Title                 string    `json:"title"`
-	OwnerID               int       `json:"owner_id"`
-	CustomerID            int       `json:"customer_id"`
-	LastContactAt         time.Time `json:"last_contact_at"`
-	LastContactAgentAt    time.Time `json:"last_contact_agent_at"`
-	LastContactCustomerAt time.Time `json:"last_contact_customer_at"`
-	CreateArticleTypeID   int       `json:"create_article_type_id"`
-	CreateArticleSenderID int       `json:"create_article_sender_id"`
-	ArticleCount          int       `json:"article_count"`
-	UpdatedByID           int       `json:"updated_by_id"`
-	CreatedByID           int       `json:"created_by_id"`
-	CreatedAt             time.Time `json:"created_at"`
-	UpdatedAt             time.Time `json:"updated_at"`
+	OwnerID               int       `json:"owner_id,omitempty"`
+	CustomerID            int       `json:"customer_id,omitempty"`
+	LastContactAt         time.Time `json:"last_contact_at,omitempty"`
+	LastContactAgentAt    time.Time `json:"last_contact_agent_at,omitempty"`
+	LastContactCustomerAt time.Time `json:"last_contact_customer_at,omitempty"`
+	CreateArticleTypeID   int       `json:"create_article_type_id,omitempty"`
+	CreateArticleSenderID int       `json:"create_article_sender_id,omitempty"`
+	ArticleCount          int       `json:"article_count,omitempty"`
+	UpdatedByID           int       `json:"updated_by_id,omitempty"`
+	CreatedByID           int       `json:"created_by_id,omitempty"`
+	CreatedAt             time.Time `json:"created_at,omitempty"`
+	UpdatedAt             time.Time `json:"updated_at,omitempty"`
 }
 
 func (c *Client) TicketList() ([]Ticket, error) {
