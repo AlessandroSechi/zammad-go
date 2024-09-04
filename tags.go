@@ -7,7 +7,7 @@ import (
 
 // Tag is a Zammad tag. See https://docs.zammad.org/en/latest/api/ticket/tags.html.
 type Tag struct {
-	ID   int    `json:"id"`
+	ID   int    `json:"id,omitempty"`
 	Name string `json:"name"`
 }
 

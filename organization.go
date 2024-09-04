@@ -8,7 +8,7 @@ import (
 
 // Organization represent a Zammad organisation. See https://docs.zammad.org/en/latest/api/organization.html.
 type Organization struct {
-	ID                 int       `json:"id"`
+	ID                 int       `json:"id,omitempty"`
 	Name               string    `json:"name"`
 	Shared             bool      `json:"shared"`
 	Domain             string    `json:"domain"`
@@ -16,12 +16,12 @@ type Organization struct {
 	Active             bool      `json:"active"`
 	Note               string    `json:"note"`
 	Vip                bool      `json:"vip"`
-	UpdatedByID        int       `json:"updated_by_id"`
-	CreatedByID        int       `json:"created_by_id"`
-	CreatedAt          time.Time `json:"created_at"`
-	UpdatedAt          time.Time `json:"updated_at"`
-	MemberIds          []int     `json:"member_ids"`
-	SecondaryMemberIds []int     `json:"secondary_member_ids"`
+	UpdatedByID        int       `json:"updated_by_id,omitempty"`
+	CreatedByID        int       `json:"created_by_id,omitempty"`
+	CreatedAt          time.Time `json:"created_at,omitempty"`
+	UpdatedAt          time.Time `json:"updated_at,omitempty"`
+	MemberIds          []int     `json:"member_ids,omitempty"`
+	SecondaryMemberIds []int     `json:"secondary_member_ids,omitempty"`
 }
 
 func (c *Client) OrganizationList() ([]Organization, error) {

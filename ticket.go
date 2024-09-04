@@ -8,25 +8,29 @@ import (
 
 // Ticket is a zammad ticket.
 type Ticket struct {
-	ID                    int       `json:"id"`
-	GroupID               int       `json:"group_id"`
-	PriorityID            int       `json:"priority_id"`
-	StateID               int       `json:"state_id"`
-	OrganizationID        int       `json:"organization_id"`
-	Number                string    `json:"number"`
-	Title                 string    `json:"title"`
-	OwnerID               int       `json:"owner_id"`
-	CustomerID            int       `json:"customer_id"`
-	LastContactAt         time.Time `json:"last_contact_at"`
-	LastContactAgentAt    time.Time `json:"last_contact_agent_at"`
-	LastContactCustomerAt time.Time `json:"last_contact_customer_at"`
-	CreateArticleTypeID   int       `json:"create_article_type_id"`
-	CreateArticleSenderID int       `json:"create_article_sender_id"`
-	ArticleCount          int       `json:"article_count"`
-	UpdatedByID           int       `json:"updated_by_id"`
-	CreatedByID           int       `json:"created_by_id"`
-	CreatedAt             time.Time `json:"created_at"`
-	UpdatedAt             time.Time `json:"updated_at"`
+	Title                 string        `json:"title"`
+	Group                 string        `json:"group"`
+	OwnerID               int           `json:"owner_id,omitempty"`
+	ID                    int           `json:"id,omitempty"`
+	Article               TicketArticle `json:"article,omitempty"`
+	GroupID               int           `json:"group_id,omitempty"`
+	PriorityID            int           `json:"priority_id,omitempty"`
+	StateID               int           `json:"state_id,omitempty"`
+	State                 string        `json:"state,omitempty"`
+	OrganizationID        int           `json:"organization_id"`
+	Number                string        `json:"number,omitempty"`
+	Customer              string        `json:"customer,omitempty"`
+	CustomerID            int           `json:"customer_id,omitempty"`
+	LastContactAt         time.Time     `json:"last_contact_at,omitempty"`
+	LastContactAgentAt    time.Time     `json:"last_contact_agent_at,omitempty"`
+	LastContactCustomerAt time.Time     `json:"last_contact_customer_at,omitempty"`
+	CreateArticleTypeID   int           `json:"create_article_type_id,omitempty"`
+	CreateArticleSenderID int           `json:"create_article_sender_id,omitempty"`
+	ArticleCount          int           `json:"article_count,omitempty"`
+	UpdatedByID           int           `json:"updated_by_id,omitempty"`
+	CreatedByID           int           `json:"created_by_id,omitempty"`
+	CreatedAt             time.Time     `json:"created_at,omitempty"`
+	UpdatedAt             time.Time     `json:"updated_at,omitempty"`
 }
 
 func (c *Client) TicketList() ([]Ticket, error) {
@@ -90,6 +94,17 @@ func (c *Client) TicketShow(ticketID int) (Ticket, error) {
 	return ticket, nil
 }
 
+// TicketCreate is used to create a ticket. For this you need to assemble a bare-bones Ticket:
+//
+//	ticket := Ticket{
+//		Title:      "your subject",
+//		Group:      "your group",
+//		CustomerID: 10, // your customer ID
+//		Article: TicketArticle{
+//			Subject: "subject of comment",
+//			Body: "body of comment",
+//		},
+//	}
 func (c *Client) TicketCreate(t Ticket) (Ticket, error) {
 	var ticket Ticket
 

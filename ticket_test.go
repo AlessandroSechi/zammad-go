@@ -10,6 +10,20 @@ import (
 	"testing"
 )
 
+// testZammad returns a client that is configured via the enviroment vars: ZAMMAD_INSTANCE and ZAMMAD_TOKEN.
+// If one of them is not set, nil is returned.
+func testZammad() *Client {
+	inst := os.Getenv("ZAMMAD_INSTANCE")
+	tok := os.Getenv("ZAMMAD_TOKEN")
+
+	if inst == "" || tok == "" {
+		return nil
+	}
+	client := New(inst)
+	client.Token = tok
+	return client
+}
+
 type testClient struct {
 	body []byte
 }
@@ -59,4 +73,30 @@ func TestTicket(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestTicketCreate(t *testing.T) {
+	client := testZammad()
+	if client == nil {
+		t.SkipNow()
+	}
+
+	// these values might not map to your zammad instance.
+	ticket := Ticket{
+		Title:    "test: test",
+		Group:    "Sysadmin",
+		Customer: "bram",
+		Article: TicketArticle{
+			Subject:  "Hello",
+			Body:     "Hello test",
+			Type:     "note",
+			Internal: true,
+		},
+	}
+
+	ticket1, err := client.TicketCreate(ticket)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Logf("%v\n", ticket1)
 }

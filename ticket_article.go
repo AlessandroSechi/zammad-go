@@ -7,28 +7,28 @@ import (
 
 // TIcketArticle represents a Zammad ticket article.
 type TicketArticle struct {
-	ID       int    `json:"id"`
-	TicketID int    `json:"ticket_id"`
-	TypeID   int    `json:"type_id"`
-	SenderID int    `json:"sender_id"`
-	From     string `json:"from"`
-	To       string `json:"to"`
+	ID       int    `json:"id,omitempty"`
+	TicketID int    `json:"ticket_id,omitempty"`
+	TypeID   int    `json:"type_id,omitempty"`
+	SenderID int    `json:"sender_id,omitempty"`
+	From     string `json:"from,omitempty"`
+	To       string `json:"to,omitempty"`
 	// Don't know if I want to keep the 'any' types here?
+	Subject     string    `json:"subject"`
+	Body        string    `json:"body"`
 	Cc          any       `json:"cc"`
-	Subject     any       `json:"subject"`
 	ReplyTo     any       `json:"reply_to"`
 	ContentType string    `json:"content_type"`
-	Body        string    `json:"body"`
 	Internal    bool      `json:"internal"`
-	UpdatedByID int       `json:"updated_by_id"`
-	CreatedByID int       `json:"created_by_id"`
-	OriginByID  any       `json:"origin_by_id"`
-	CreatedAt   time.Time `json:"created_at"`
-	UpdatedAt   time.Time `json:"updated_at"`
-	Type        string    `json:"type"`
-	Sender      string    `json:"sender"`
-	CreatedBy   string    `json:"created_by"`
-	UpdatedBy   string    `json:"updated_by"`
+	UpdatedByID int       `json:"updated_by_id,omitempty"`
+	CreatedByID int       `json:"created_by_id,omitempty"`
+	OriginByID  any       `json:"origin_by_id,omitempty"`
+	CreatedAt   time.Time `json:"created_at,omitempty"`
+	UpdatedAt   time.Time `json:"updated_at,omitempty"`
+	Type        string    `json:"type,omitempty"`
+	Sender      string    `json:"sender,omitempty"`
+	CreatedBy   string    `json:"created_by,omitempty"`
+	UpdatedBy   string    `json:"updated_by,omitempty"`
 }
 
 func (c *Client) TicketArticleByTicket(ticketID int) ([]TicketArticle, error) {
