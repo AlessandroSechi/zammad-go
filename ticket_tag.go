@@ -1,13 +1,16 @@
 package zammad
 
-import "fmt"
+import (
+	"fmt"
+	"net/http"
+)
 
 func (c *Client) TicketTagByTicket(ticketID int) ([]Tag, error) {
 	var tags struct {
 		Tags []string
 	}
 
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/tags?object=Ticket&o_id=%d", ticketID)), nil)
+	req, err := c.NewRequest(http.MethodGet, fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/tags?object=Ticket&o_id=%d", ticketID)), nil)
 	if err != nil {
 		return nil, err
 	}

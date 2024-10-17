@@ -25,7 +25,7 @@ func TestUserAccessToken(t *testing.T) {
 			var outerr error
 			switch tt.Func {
 			case "UserAccessTokenList":
-				ts, err := z.UserAccessTokenList()
+				ts, err := z.UserAccessTokenList(NewRequestOptions())
 				if len(ts) != tt.Expect {
 					t.Errorf("expected %d tokens, got %d", tt.Expect, len(ts))
 				}

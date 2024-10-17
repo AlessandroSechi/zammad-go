@@ -1,6 +1,9 @@
 package zammad
 
-import "fmt"
+import (
+	"fmt"
+	"net/http"
+)
 
 // Object represent a Zammad object. See https://docs.zammad.org/en/latest/api/object.html.
 // Also note the warning there:
@@ -9,13 +12,27 @@ import "fmt"
 //	to adjust any of Zammads default fields.
 type Object *map[string]interface{}
 
+func (c *Client) ObjectListResult(opts ...Option) *Result[Object] {
+	return &Result[Object]{
+		res:     nil,
+		resFunc: c.ObjectListWithOptions,
+		opts:    NewRequestOptions(opts...),
+	}
+}
+
 func (c *Client) ObjectList() ([]Object, error) {
+	return c.ObjectListResult().FetchAll()
+}
+
+func (c *Client) ObjectListWithOptions(ro RequestOptions) ([]Object, error) {
 	var objects []Object
 
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, "/api/v1/object_manager_attributes"), nil)
+	req, err := c.NewRequest(http.MethodGet, fmt.Sprintf("%s%s", c.Url, "/api/v1/object_manager_attributes"), nil)
 	if err != nil {
 		return objects, err
 	}
+
+	req.URL.RawQuery = ro.URLParams()
 
 	if err = c.sendWithAuth(req, objects); err != nil {
 		return objects, err
@@ -27,7 +44,7 @@ func (c *Client) ObjectList() ([]Object, error) {
 func (c *Client) ObjectShow(objectID int) (Object, error) {
 	var object Object
 
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/object_manager_attributes/%d", objectID)), nil)
+	req, err := c.NewRequest(http.MethodGet, fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/object_manager_attributes/%d", objectID)), nil)
 	if err != nil {
 		return object, err
 	}
@@ -42,7 +59,7 @@ func (c *Client) ObjectShow(objectID int) (Object, error) {
 func (c *Client) ObjectCreate(o Object) (Object, error) {
 	var object Object
 
-	req, err := c.NewRequest("POST", fmt.Sprintf("%s%s", c.Url, "/api/v1/object_manager_attributes"), o)
+	req, err := c.NewRequest(http.MethodPost, fmt.Sprintf("%s%s", c.Url, "/api/v1/object_manager_attributes"), o)
 	if err != nil {
 		return object, err
 	}
@@ -57,7 +74,7 @@ func (c *Client) ObjectCreate(o Object) (Object, error) {
 func (c *Client) ObjectUpdate(objectID int, o Object) (Object, error) {
 	var object Object
 
-	req, err := c.NewRequest("PUT", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/object_manager_attributes/%d", objectID)), o)
+	req, err := c.NewRequest(http.MethodPut, fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/object_manager_attributes/%d", objectID)), o)
 	if err != nil {
 		return object, err
 	}
@@ -71,7 +88,7 @@ func (c *Client) ObjectUpdate(objectID int, o Object) (Object, error) {
 
 func (c *Client) ObjectExecuteDatabaseMigration() error {
 
-	req, err := c.NewRequest("POST", fmt.Sprintf("%s%s", c.Url, "/api/v1/object_manager_attributes_execute_migrations"), nil)
+	req, err := c.NewRequest(http.MethodPost, fmt.Sprintf("%s%s", c.Url, "/api/v1/object_manager_attributes_execute_migrations"), nil)
 	if err != nil {
 		return err
 	}

@@ -2,6 +2,7 @@ package zammad
 
 import (
 	"fmt"
+	"net/http"
 	"net/url"
 	"time"
 )
@@ -33,13 +34,27 @@ type Ticket struct {
 	UpdatedAt             time.Time     `json:"updated_at,omitempty"`
 }
 
+func (c *Client) TicketListResult(opts ...Option) *Result[Ticket] {
+	return &Result[Ticket]{
+		res:     nil,
+		resFunc: c.TicketListWithOptions,
+		opts:    NewRequestOptions(opts...),
+	}
+}
+
 func (c *Client) TicketList() ([]Ticket, error) {
+	return c.TicketListResult().FetchAll()
+}
+
+func (c *Client) TicketListWithOptions(ro RequestOptions) ([]Ticket, error) {
 	var tickets []Ticket
 
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, "/api/v1/tickets"), nil)
+	req, err := c.NewRequest(http.MethodGet, fmt.Sprintf("%s%s", c.Url, "/api/v1/tickets"), nil)
 	if err != nil {
 		return nil, err
 	}
+
+	req.URL.RawQuery = ro.URLParams()
 
 	if err = c.sendWithAuth(req, &tickets); err != nil {
 		return nil, err
@@ -61,7 +76,7 @@ func (c *Client) TicketSearch(query string, limit int) ([]Ticket, error) {
 	}
 
 	var ticksearch TickSearch
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/tickets/search?query=%s&limit=%d", url.QueryEscape(query), limit)), nil)
+	req, err := c.NewRequest(http.MethodGet, fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/tickets/search?query=%s&limit=%d", url.QueryEscape(query), limit)), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -82,7 +97,7 @@ func (c *Client) TicketSearch(query string, limit int) ([]Ticket, error) {
 func (c *Client) TicketShow(ticketID int) (Ticket, error) {
 	var ticket Ticket
 
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/tickets/%d", ticketID)), nil)
+	req, err := c.NewRequest(http.MethodGet, fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/tickets/%d", ticketID)), nil)
 	if err != nil {
 		return ticket, err
 	}
@@ -108,7 +123,7 @@ func (c *Client) TicketShow(ticketID int) (Ticket, error) {
 func (c *Client) TicketCreate(t Ticket) (Ticket, error) {
 	var ticket Ticket
 
-	req, err := c.NewRequest("POST", fmt.Sprintf("%s%s", c.Url, "/api/v1/tickets"), t)
+	req, err := c.NewRequest(http.MethodPost, fmt.Sprintf("%s%s", c.Url, "/api/v1/tickets"), t)
 	if err != nil {
 		return ticket, err
 	}
@@ -123,7 +138,7 @@ func (c *Client) TicketCreate(t Ticket) (Ticket, error) {
 func (c *Client) TicketUpdate(ticketID int, t Ticket) (Ticket, error) {
 	var ticket Ticket
 
-	req, err := c.NewRequest("PUT", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/tickets/%d", ticketID)), t)
+	req, err := c.NewRequest(http.MethodPut, fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/tickets/%d", ticketID)), t)
 	if err != nil {
 		return ticket, err
 	}
@@ -137,7 +152,7 @@ func (c *Client) TicketUpdate(ticketID int, t Ticket) (Ticket, error) {
 
 func (c *Client) TicketDelete(ticketID int) error {
 
-	req, err := c.NewRequest("DELETE", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/tickets/%d", ticketID)), nil)
+	req, err := c.NewRequest(http.MethodDelete, fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/tickets/%d", ticketID)), nil)
 	if err != nil {
 		return err
 	}

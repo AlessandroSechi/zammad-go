@@ -55,7 +55,7 @@ func TestTicket(t *testing.T) {
 			var outerr error
 			switch tt.Func {
 			case "TicketList":
-				ts, err := z.TicketList()
+				ts, err := z.TicketList(NewRequestOptions())
 				if len(ts) != tt.Expect {
 					t.Errorf("expected %d tickets, got %d", tt.Expect, len(ts))
 				}

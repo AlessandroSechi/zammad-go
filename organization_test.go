@@ -24,7 +24,7 @@ func TestOrganization(t *testing.T) {
 			var outerr error
 			switch tt.Func {
 			case "OrganizationList":
-				ts, err := z.OrganizationList()
+				ts, err := z.OrganizationList(NewRequestOptions())
 				if len(ts) != tt.Expect {
 					t.Errorf("expected %d tickets, got %d", tt.Expect, len(ts))
 				}

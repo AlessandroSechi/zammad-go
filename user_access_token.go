@@ -2,6 +2,7 @@ package zammad
 
 import (
 	"fmt"
+	"net/http"
 	"time"
 )
 
@@ -57,17 +58,31 @@ func (d *Date) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (c *Client) UserAccessTokenListResult(opts ...Option) *Result[UserAccessToken] {
+	return &Result[UserAccessToken]{
+		res:     nil,
+		resFunc: c.UserAccessTokenListWithOptions,
+		opts:    NewRequestOptions(opts...),
+	}
+}
+
 func (c *Client) UserAccessTokenList() ([]UserAccessToken, error) {
+	return c.UserAccessTokenListResult().FetchAll()
+}
+
+func (c *Client) UserAccessTokenListWithOptions(ro RequestOptions) ([]UserAccessToken, error) {
 	type TockList struct {
 		Tokens      []UserAccessToken `json:"tokens"`
 		Permissions []Permission      `json:"permissions"`
 	}
 
 	var tockList TockList
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, "/api/v1/user_access_token"), nil)
+	req, err := c.NewRequest(http.MethodGet, fmt.Sprintf("%s%s", c.Url, "/api/v1/user_access_token"), nil)
 	if err != nil {
 		return nil, err
 	}
+
+	req.URL.RawQuery = ro.URLParams()
 
 	if err = c.sendWithAuth(req, &tockList); err != nil {
 		return nil, err
@@ -85,7 +100,7 @@ func (c *Client) UserAccessTokenList() ([]UserAccessToken, error) {
 func (c *Client) UserAccessTokenCreate(t UserAccessToken) (UserAccessToken, error) {
 	var userAccessToken UserAccessToken
 
-	req, err := c.NewRequest("POST", fmt.Sprintf("%s%s", c.Url, "/api/v1/user_access_token"), t)
+	req, err := c.NewRequest(http.MethodPost, fmt.Sprintf("%s%s", c.Url, "/api/v1/user_access_token"), t)
 	if err != nil {
 		return userAccessToken, err
 	}
@@ -99,7 +114,7 @@ func (c *Client) UserAccessTokenCreate(t UserAccessToken) (UserAccessToken, erro
 
 func (c *Client) UserAccessTokenDelete(tokenID int) error {
 
-	req, err := c.NewRequest("DELETE", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/user_access_token/%d", tokenID)), nil)
+	req, err := c.NewRequest(http.MethodDelete, fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/user_access_token/%d", tokenID)), nil)
 	if err != nil {
 		return err
 	}
