@@ -19,7 +19,8 @@ func TestOrganization(t *testing.T) {
 	z := &Client{}
 	for i, tt := range organizationTests {
 		data, _ := os.ReadFile(path.Join("testdata", tt.File))
-		z.Client = testClient{body: data}
+		z.Client = testClient{body: data, pages: 1}
+
 		t.Run(fmt.Sprintf("%0d-%s", i, tt.Func), func(t *testing.T) {
 			var outerr error
 			switch tt.Func {

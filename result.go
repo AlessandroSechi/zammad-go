@@ -20,6 +20,10 @@ func (tr *Result[T]) Next() bool {
 		return true
 	}
 
+	if tr.opts.page == 0 {
+		tr.opts.page = 1
+	}
+
 	tr.opts.page++
 	tr.res = res
 
