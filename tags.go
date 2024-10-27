@@ -2,6 +2,7 @@ package zammad
 
 import (
 	"fmt"
+	"net/http"
 	"net/url"
 )
 
@@ -14,7 +15,7 @@ type Tag struct {
 func (c *Client) TagSearch(term string) ([]Tag, error) {
 	var tags []Tag
 
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/tag_search?term=%s", url.QueryEscape(term))), nil)
+	req, err := c.NewRequest(http.MethodGet, fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/tag_search?term=%s", url.QueryEscape(term))), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -28,7 +29,7 @@ func (c *Client) TagSearch(term string) ([]Tag, error) {
 
 func (c *Client) TagAdd(t Tag) error {
 
-	req, err := c.NewRequest("POST", fmt.Sprintf("%s%s", c.Url, "/api/v1/tags/add"), t)
+	req, err := c.NewRequest(http.MethodPost, fmt.Sprintf("%s%s", c.Url, "/api/v1/tags/add"), t)
 	if err != nil {
 		return err
 	}
@@ -42,7 +43,7 @@ func (c *Client) TagAdd(t Tag) error {
 
 func (c *Client) TagRemove(t Tag) error {
 
-	req, err := c.NewRequest("DELETE", fmt.Sprintf("%s%s", c.Url, "/api/v1/tags/remove"), t)
+	req, err := c.NewRequest(http.MethodDelete, fmt.Sprintf("%s%s", c.Url, "/api/v1/tags/remove"), t)
 	if err != nil {
 		return err
 	}
@@ -57,7 +58,7 @@ func (c *Client) TagRemove(t Tag) error {
 func (c *Client) TagAdminList() ([]Tag, error) {
 	var tags []Tag
 
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, "/api/v1/tag_list"), nil)
+	req, err := c.NewRequest(http.MethodGet, fmt.Sprintf("%s%s", c.Url, "/api/v1/tag_list"), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -71,7 +72,7 @@ func (c *Client) TagAdminList() ([]Tag, error) {
 
 func (c *Client) TagAdminCreate(t Tag) error {
 
-	req, err := c.NewRequest("POST", fmt.Sprintf("%s%s", c.Url, "/api/v1/tag_list"), t)
+	req, err := c.NewRequest(http.MethodPost, fmt.Sprintf("%s%s", c.Url, "/api/v1/tag_list"), t)
 	if err != nil {
 		return err
 	}
@@ -85,7 +86,7 @@ func (c *Client) TagAdminCreate(t Tag) error {
 
 func (c *Client) TagAdminRename(tagID int, t Tag) error {
 
-	req, err := c.NewRequest("PUT", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/tag_list/%d", tagID)), t)
+	req, err := c.NewRequest(http.MethodPut, fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/tag_list/%d", tagID)), t)
 	if err != nil {
 		return err
 	}
@@ -99,7 +100,7 @@ func (c *Client) TagAdminRename(tagID int, t Tag) error {
 
 func (c *Client) TagAdminDelete(tagID int) error {
 
-	req, err := c.NewRequest("DELETE", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/tag_list/%d", tagID)), nil)
+	req, err := c.NewRequest(http.MethodDelete, fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/tag_list/%d", tagID)), nil)
 	if err != nil {
 		return err
 	}

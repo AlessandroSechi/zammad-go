@@ -2,6 +2,7 @@ package zammad
 
 import (
 	"fmt"
+	"net/http"
 	"time"
 )
 
@@ -20,13 +21,27 @@ type TicketPriority struct {
 	UpdatedAt     time.Time `json:"updated_at"`
 }
 
+func (c *Client) TicketPriorityListResult(opts ...Option) *Result[TicketPriority] {
+	return &Result[TicketPriority]{
+		res:     nil,
+		resFunc: c.TicketPriorityListWithOptions,
+		opts:    NewRequestOptions(opts...),
+	}
+}
+
 func (c *Client) TicketPriorityList() ([]TicketPriority, error) {
+	return c.TicketPriorityListResult().FetchAll()
+}
+
+func (c *Client) TicketPriorityListWithOptions(ro RequestOptions) ([]TicketPriority, error) {
 	var ticketPriorities []TicketPriority
 
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, "/api/v1/ticket_priorities"), nil)
+	req, err := c.NewRequest(http.MethodGet, fmt.Sprintf("%s%s", c.Url, "/api/v1/ticket_priorities"), nil)
 	if err != nil {
 		return ticketPriorities, err
 	}
+
+	req.URL.RawQuery = ro.URLParams()
 
 	if err = c.sendWithAuth(req, &ticketPriorities); err != nil {
 		return ticketPriorities, err
@@ -38,7 +53,7 @@ func (c *Client) TicketPriorityList() ([]TicketPriority, error) {
 func (c *Client) TicketPriorityShow(ticketPriorityID int) (TicketPriority, error) {
 	var ticketPriority TicketPriority
 
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/ticket_priorities/%d", ticketPriorityID)), nil)
+	req, err := c.NewRequest(http.MethodGet, fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/ticket_priorities/%d", ticketPriorityID)), nil)
 	if err != nil {
 		return ticketPriority, err
 	}
@@ -53,7 +68,7 @@ func (c *Client) TicketPriorityShow(ticketPriorityID int) (TicketPriority, error
 func (c *Client) TicketPriorityCreate(t TicketPriority) (TicketPriority, error) {
 	var ticketPriority TicketPriority
 
-	req, err := c.NewRequest("POST", fmt.Sprintf("%s%s", c.Url, "/api/v1/ticket_priorities"), t)
+	req, err := c.NewRequest(http.MethodPost, fmt.Sprintf("%s%s", c.Url, "/api/v1/ticket_priorities"), t)
 	if err != nil {
 		return ticketPriority, err
 	}
@@ -68,7 +83,7 @@ func (c *Client) TicketPriorityCreate(t TicketPriority) (TicketPriority, error) 
 func (c *Client) TicketPriorityUpdate(ticketPriorityID int, t TicketPriority) (TicketPriority, error) {
 	var ticketPriority TicketPriority
 
-	req, err := c.NewRequest("PUT", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/ticket_priorities/%d", ticketPriorityID)), t)
+	req, err := c.NewRequest(http.MethodPut, fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/ticket_priorities/%d", ticketPriorityID)), t)
 	if err != nil {
 		return ticketPriority, err
 	}
@@ -82,7 +97,7 @@ func (c *Client) TicketPriorityUpdate(ticketPriorityID int, t TicketPriority) (T
 
 func (c *Client) TicketPriorityDelete(ticketPriorityID int) error {
 
-	req, err := c.NewRequest("DELETE", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/ticket_priorities/%d", ticketPriorityID)), nil)
+	req, err := c.NewRequest(http.MethodDelete, fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/ticket_priorities/%d", ticketPriorityID)), nil)
 	if err != nil {
 		return err
 	}

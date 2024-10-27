@@ -2,6 +2,7 @@ package zammad
 
 import (
 	"fmt"
+	"net/http"
 	"time"
 )
 
@@ -19,13 +20,27 @@ type TicketState struct {
 	CreatedAt        time.Time `json:"created_at"`
 }
 
+func (c *Client) TicketStateListResult(opts ...Option) *Result[TicketState] {
+	return &Result[TicketState]{
+		res:     nil,
+		resFunc: c.TicketStateListWithOptions,
+		opts:    NewRequestOptions(opts...),
+	}
+}
+
 func (c *Client) TicketStateList() ([]TicketState, error) {
+	return c.TicketStateListResult().FetchAll()
+}
+
+func (c *Client) TicketStateListWithOptions(ro RequestOptions) ([]TicketState, error) {
 	var ticketStates []TicketState
 
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, "/api/v1/ticket_states"), nil)
+	req, err := c.NewRequest(http.MethodGet, fmt.Sprintf("%s%s", c.Url, "/api/v1/ticket_states"), nil)
 	if err != nil {
 		return ticketStates, err
 	}
+
+	req.URL.RawQuery = ro.URLParams()
 
 	if err = c.sendWithAuth(req, &ticketStates); err != nil {
 		return ticketStates, err
@@ -37,7 +52,7 @@ func (c *Client) TicketStateList() ([]TicketState, error) {
 func (c *Client) TicketStateShow(ticketStateID int) (TicketState, error) {
 	var ticketState TicketState
 
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/ticket_states/%d", ticketStateID)), nil)
+	req, err := c.NewRequest(http.MethodGet, fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/ticket_states/%d", ticketStateID)), nil)
 	if err != nil {
 		return ticketState, err
 	}
@@ -52,7 +67,7 @@ func (c *Client) TicketStateShow(ticketStateID int) (TicketState, error) {
 func (c *Client) TicketStateCreate(t TicketState) (TicketState, error) {
 	var ticketState TicketState
 
-	req, err := c.NewRequest("POST", fmt.Sprintf("%s%s", c.Url, "/api/v1/ticket_states"), t)
+	req, err := c.NewRequest(http.MethodPost, fmt.Sprintf("%s%s", c.Url, "/api/v1/ticket_states"), t)
 	if err != nil {
 		return ticketState, err
 	}
@@ -67,7 +82,7 @@ func (c *Client) TicketStateCreate(t TicketState) (TicketState, error) {
 func (c *Client) TicketStateUpdate(ticketStateID int, t TicketState) (TicketState, error) {
 	var ticketState TicketState
 
-	req, err := c.NewRequest("PUT", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/ticket_states/%d", ticketStateID)), t)
+	req, err := c.NewRequest(http.MethodPut, fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/ticket_states/%d", ticketStateID)), t)
 	if err != nil {
 		return ticketState, err
 	}
@@ -81,7 +96,7 @@ func (c *Client) TicketStateUpdate(ticketStateID int, t TicketState) (TicketStat
 
 func (c *Client) TicketStateDelete(ticketStateID int) error {
 
-	req, err := c.NewRequest("DELETE", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/ticket_states/%d", ticketStateID)), nil)
+	req, err := c.NewRequest(http.MethodDelete, fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/ticket_states/%d", ticketStateID)), nil)
 	if err != nil {
 		return err
 	}

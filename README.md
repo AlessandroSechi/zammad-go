@@ -15,19 +15,30 @@ import (
 )
 
 func main() {
-    client := zammad.New("https://my-zammad-instance.com")
-    client.Token = "my-accces-token"
-    // or basic auth see godoc
+	client := zammad.New("https://my-zammad-instance.com")
+	client.Token = "my-accces-token"
+	// or basic auth see godoc
 
-    users, err := client.UserList() // Get all users
-    if err != nil {
-        log.Fatal(err)
-    }
+	users, err := client.UserList() // Get all users
+	if err != nil {
+		log.Fatal(err)
+	}
 
-    user, err := client.UserShow(1)  // Get User with ID 1
-    if err != nil {
-        log.Fatal(err)
-    }
+	user, err := client.UserShow(1) // Get User with ID 1
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// to iterate over pages
+	ticketRes := client.TicketListResult(zammad.WithPerPage(50))
+	for ticketRes.Next() {
+		tickets, err := ticketRes.Fetch()
+		if err != nil {
+			log.Fatalf("failed: %s", err)
+		}
+
+		log.Printf("number of tickets: %d\n", len(tickets))
+	}
 }
 ```
 

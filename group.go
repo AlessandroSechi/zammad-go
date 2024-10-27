@@ -2,6 +2,7 @@ package zammad
 
 import (
 	"fmt"
+	"net/http"
 	"time"
 )
 
@@ -20,13 +21,27 @@ type Group struct {
 	UserIds            []int     `json:"user_ids"`
 }
 
+func (c *Client) GroupListListResult(opts ...Option) *Result[Group] {
+	return &Result[Group]{
+		res:     nil,
+		resFunc: c.GroupListWithOptions,
+		opts:    NewRequestOptions(opts...),
+	}
+}
+
 func (c *Client) GroupList() ([]Group, error) {
+	return c.GroupListListResult().FetchAll()
+}
+
+func (c *Client) GroupListWithOptions(ro RequestOptions) ([]Group, error) {
 	var groups []Group
 
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, "/api/v1/groups"), nil)
+	req, err := c.NewRequest(http.MethodGet, fmt.Sprintf("%s%s", c.Url, "/api/v1/groups"), nil)
 	if err != nil {
 		return nil, err
 	}
+
+	req.URL.RawQuery = ro.URLParams()
 
 	if err = c.sendWithAuth(req, &groups); err != nil {
 		return nil, err
@@ -38,7 +53,7 @@ func (c *Client) GroupList() ([]Group, error) {
 func (c *Client) GroupShow(groupID int) (Group, error) {
 	var group Group
 
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/groups/%d", groupID)), nil)
+	req, err := c.NewRequest(http.MethodGet, fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/groups/%d", groupID)), nil)
 	if err != nil {
 		return group, err
 	}
@@ -53,7 +68,7 @@ func (c *Client) GroupShow(groupID int) (Group, error) {
 func (c *Client) GroupCreate(g Group) (Group, error) {
 	var group Group
 
-	req, err := c.NewRequest("POST", fmt.Sprintf("%s%s", c.Url, "/api/v1/groups"), g)
+	req, err := c.NewRequest(http.MethodPost, fmt.Sprintf("%s%s", c.Url, "/api/v1/groups"), g)
 	if err != nil {
 		return group, err
 	}
@@ -68,7 +83,7 @@ func (c *Client) GroupCreate(g Group) (Group, error) {
 func (c *Client) GroupUpdate(groupID int, g Group) (Group, error) {
 	var group Group
 
-	req, err := c.NewRequest("PUT", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/groups/%d", groupID)), g)
+	req, err := c.NewRequest(http.MethodPut, fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/groups/%d", groupID)), g)
 	if err != nil {
 		return group, err
 	}
@@ -82,7 +97,7 @@ func (c *Client) GroupUpdate(groupID int, g Group) (Group, error) {
 
 func (c *Client) GroupDelete(groupID int) error {
 
-	req, err := c.NewRequest("DELETE", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/groups/%d", groupID)), nil)
+	req, err := c.NewRequest(http.MethodDelete, fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/groups/%d", groupID)), nil)
 	if err != nil {
 		return err
 	}

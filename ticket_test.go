@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"path"
+	"strconv"
 	"testing"
 )
 
@@ -25,16 +26,28 @@ func testZammad() *Client {
 }
 
 type testClient struct {
-	body []byte
+	pages int
+	body  []byte
 }
 
 // Do implements the Doer interface.
-func (t testClient) Do(*http.Request) (*http.Response, error) {
-	r := &http.Response{
+func (t testClient) Do(r *http.Request) (*http.Response, error) {
+	page, _ := strconv.Atoi(r.URL.Query().Get("page"))
+	if page == 0 {
+		page = 1
+	}
+
+	if page > t.pages {
+		return &http.Response{
+			Body:       io.NopCloser(bytes.NewBufferString("[]")),
+			StatusCode: 200,
+		}, nil
+	}
+
+	return &http.Response{
 		Body:       io.NopCloser(bytes.NewBuffer(t.body)),
 		StatusCode: 200,
-	}
-	return r, nil
+	}, nil
 }
 
 var ticketTests = []struct {
@@ -50,7 +63,7 @@ func TestTicket(t *testing.T) {
 	z := &Client{}
 	for i, tt := range ticketTests {
 		data, _ := os.ReadFile(path.Join("testdata", tt.File))
-		z.Client = testClient{body: data}
+		z.Client = testClient{body: data, pages: 1}
 		t.Run(fmt.Sprintf("%0d-%s", i, tt.Func), func(t *testing.T) {
 			var outerr error
 			switch tt.Func {

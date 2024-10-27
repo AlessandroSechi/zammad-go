@@ -2,6 +2,7 @@ package zammad
 
 import (
 	"fmt"
+	"net/http"
 	"net/url"
 	"time"
 )
@@ -22,7 +23,7 @@ type User struct {
 func (c *Client) UserMe() (User, error) {
 	var user User
 
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, "/api/v1/users/me"), nil)
+	req, err := c.NewRequest(http.MethodGet, fmt.Sprintf("%s%s", c.Url, "/api/v1/users/me"), nil)
 	if err != nil {
 		return user, err
 	}
@@ -34,13 +35,27 @@ func (c *Client) UserMe() (User, error) {
 	return user, nil
 }
 
+func (c *Client) UserListResult(opts ...Option) *Result[User] {
+	return &Result[User]{
+		res:     nil,
+		resFunc: c.UserListWithOptions,
+		opts:    NewRequestOptions(opts...),
+	}
+}
+
 func (c *Client) UserList() ([]User, error) {
+	return c.UserListResult().FetchAll()
+}
+
+func (c *Client) UserListWithOptions(ro RequestOptions) ([]User, error) {
 	var users []User
 
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, "/api/v1/users"), nil)
+	req, err := c.NewRequest(http.MethodGet, fmt.Sprintf("%s%s", c.Url, "/api/v1/users"), nil)
 	if err != nil {
 		return nil, err
 	}
+
+	req.URL.RawQuery = ro.URLParams()
 
 	if err = c.sendWithAuth(req, &users); err != nil {
 		return nil, err
@@ -52,7 +67,7 @@ func (c *Client) UserList() ([]User, error) {
 func (c *Client) UserSearch(query string, limit int) ([]User, error) {
 	var users []User
 
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/users/search?query=%s&limit=%d", url.QueryEscape(query), limit)), nil)
+	req, err := c.NewRequest(http.MethodGet, fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/users/search?query=%s&limit=%d", url.QueryEscape(query), limit)), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -67,7 +82,7 @@ func (c *Client) UserSearch(query string, limit int) ([]User, error) {
 func (c *Client) UserShow(userID int) (User, error) {
 	var user User
 
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/users/%d", userID)), nil)
+	req, err := c.NewRequest(http.MethodGet, fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/users/%d", userID)), nil)
 	if err != nil {
 		return user, err
 	}
@@ -82,7 +97,7 @@ func (c *Client) UserShow(userID int) (User, error) {
 func (c *Client) UserCreate(u User) (User, error) {
 	var user User
 
-	req, err := c.NewRequest("POST", fmt.Sprintf("%s%s", c.Url, "/api/v1/users"), u)
+	req, err := c.NewRequest(http.MethodPost, fmt.Sprintf("%s%s", c.Url, "/api/v1/users"), u)
 	if err != nil {
 		return user, err
 	}
@@ -97,7 +112,7 @@ func (c *Client) UserCreate(u User) (User, error) {
 func (c *Client) UserUpdate(userID int, u User) (User, error) {
 	var user User
 
-	req, err := c.NewRequest("PUT", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/users/%d", userID)), u)
+	req, err := c.NewRequest(http.MethodPut, fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/users/%d", userID)), u)
 	if err != nil {
 		return user, err
 	}
@@ -111,7 +126,7 @@ func (c *Client) UserUpdate(userID int, u User) (User, error) {
 
 func (c *Client) UserDelete(userID int) error {
 
-	req, err := c.NewRequest("PUT", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/users/%d", userID)), nil)
+	req, err := c.NewRequest(http.MethodDelete, fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/users/%d", userID)), nil)
 	if err != nil {
 		return err
 	}

@@ -2,10 +2,11 @@ package zammad
 
 import (
 	"fmt"
+	"net/http"
 	"time"
 )
 
-// TIcketArticle represents a Zammad ticket article.
+// TicketArticle represents a Zammad ticket article.
 type TicketArticle struct {
 	ID       int    `json:"id,omitempty"`
 	TicketID int    `json:"ticket_id,omitempty"`
@@ -34,7 +35,7 @@ type TicketArticle struct {
 func (c *Client) TicketArticleByTicket(ticketID int) ([]TicketArticle, error) {
 	var ticketArticles []TicketArticle
 
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/ticket_articles/by_ticket/%d", ticketID)), nil)
+	req, err := c.NewRequest(http.MethodGet, fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/ticket_articles/by_ticket/%d", ticketID)), nil)
 	if err != nil {
 		return ticketArticles, err
 	}
@@ -49,7 +50,7 @@ func (c *Client) TicketArticleByTicket(ticketID int) ([]TicketArticle, error) {
 func (c *Client) TicketArticleShow(ticketArticleID int) (TicketArticle, error) {
 	var ticketArticle TicketArticle
 
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/ticket_articles/%d", ticketArticleID)), nil)
+	req, err := c.NewRequest(http.MethodGet, fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/ticket_articles/%d", ticketArticleID)), nil)
 	if err != nil {
 		return ticketArticle, err
 	}
@@ -64,7 +65,7 @@ func (c *Client) TicketArticleShow(ticketArticleID int) (TicketArticle, error) {
 func (c *Client) TicketArticleCreate(t TicketArticle) (TicketArticle, error) {
 	var ticketArticle TicketArticle
 
-	req, err := c.NewRequest("POST", fmt.Sprintf("%s%s", c.Url, "/api/v1/ticket_articles"), t)
+	req, err := c.NewRequest(http.MethodPost, fmt.Sprintf("%s%s", c.Url, "/api/v1/ticket_articles"), t)
 	if err != nil {
 		return ticketArticle, err
 	}

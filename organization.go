@@ -2,6 +2,7 @@ package zammad
 
 import (
 	"fmt"
+	"net/http"
 	"net/url"
 	"time"
 )
@@ -24,13 +25,27 @@ type Organization struct {
 	SecondaryMemberIds []int     `json:"secondary_member_ids,omitempty"`
 }
 
+func (c *Client) OrganizationListResult(opts ...Option) *Result[Organization] {
+	return &Result[Organization]{
+		res:     nil,
+		resFunc: c.OrganizationListWithOptions,
+		opts:    NewRequestOptions(opts...),
+	}
+}
+
 func (c *Client) OrganizationList() ([]Organization, error) {
+	return c.OrganizationListResult().FetchAll()
+}
+
+func (c *Client) OrganizationListWithOptions(ro RequestOptions) ([]Organization, error) {
 	var organizations []Organization
 
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, "/api/v1/organizations"), nil)
+	req, err := c.NewRequest(http.MethodGet, fmt.Sprintf("%s%s", c.Url, "/api/v1/organizations"), nil)
 	if err != nil {
 		return organizations, err
 	}
+
+	req.URL.RawQuery = ro.URLParams()
 
 	if err = c.sendWithAuth(req, &organizations); err != nil {
 		return organizations, err
@@ -42,7 +57,7 @@ func (c *Client) OrganizationList() ([]Organization, error) {
 func (c *Client) OrganizationSearch(query string, limit int) ([]Organization, error) {
 	var organizations []Organization
 
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/organizations/search?query=%slimit=%d", url.QueryEscape(query), limit)), nil)
+	req, err := c.NewRequest(http.MethodGet, fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/organizations/search?query=%slimit=%d", url.QueryEscape(query), limit)), nil)
 	if err != nil {
 		return organizations, err
 	}
@@ -57,7 +72,7 @@ func (c *Client) OrganizationSearch(query string, limit int) ([]Organization, er
 func (c *Client) OrganizationShow(organizationID int) (Organization, error) {
 	var organization Organization
 
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/organizations/%d", organizationID)), nil)
+	req, err := c.NewRequest(http.MethodGet, fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/organizations/%d", organizationID)), nil)
 	if err != nil {
 		return organization, err
 	}
@@ -72,7 +87,7 @@ func (c *Client) OrganizationShow(organizationID int) (Organization, error) {
 func (c *Client) OrganizationCreate(o Organization) (Organization, error) {
 	var organization Organization
 
-	req, err := c.NewRequest("POST", fmt.Sprintf("%s%s", c.Url, "/api/v1/organizations"), o)
+	req, err := c.NewRequest(http.MethodPost, fmt.Sprintf("%s%s", c.Url, "/api/v1/organizations"), o)
 	if err != nil {
 		return organization, err
 	}
@@ -87,7 +102,7 @@ func (c *Client) OrganizationCreate(o Organization) (Organization, error) {
 func (c *Client) OrganizationUpdate(organizationID int, o Organization) (Organization, error) {
 	var organization Organization
 
-	req, err := c.NewRequest("PUT", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/organizations/%d", organizationID)), o)
+	req, err := c.NewRequest(http.MethodPut, fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/organizations/%d", organizationID)), o)
 	if err != nil {
 		return organization, err
 	}
@@ -101,7 +116,7 @@ func (c *Client) OrganizationUpdate(organizationID int, o Organization) (Organiz
 
 func (c *Client) OrganizationDelete(organizationID int) error {
 
-	req, err := c.NewRequest("DELETE", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/organizations/%d", organizationID)), nil)
+	req, err := c.NewRequest(http.MethodDelete, fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/organizations/%d", organizationID)), nil)
 	if err != nil {
 		return err
 	}
